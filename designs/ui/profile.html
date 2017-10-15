@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/profile.css">
 
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <!-- <link rel="icon" type="image/png" href="images/favico3232.png"> -->
@@ -33,9 +37,49 @@
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div class="container">
+    <nav class="navbar navbar-expand-sm navbar-light" style="background: rgb(199, 103, 68);">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content" aria-controls="nav-content" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- Brand -->
+        <a class="navbar-brand" href="#"><h1>Yummy Recipes</h1></a>
+        
+        <!-- Links -->
+        <div class="collapse navbar-collapse" id="nav-content">   
+        <ul class="navbar-nav">
+        <li class="nav-item">
+        <a class="nav-link" href="#">Categories</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="#">Recipes</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="#">Logout</a>
+        </li>
+        </ul>
+                
+    </nav>
     <div class="row">
       <div class="col-md-3">
-          Left
+            <div class="card text-center" style="max-width: 230px;">
+                    
+                    <!-- Heading -->
+                    <div class="card-body">
+                    <h4 class="card-title">Username</h4>
+                    <h6 class="card-subtitle text-muted">Short statement</h6>
+                    </div>
+                    
+                    <!-- Image -->
+                    <img src="/pix/samples/12s.jpg" alt="Photo of sunset">
+                    
+                    <!-- Text Content -->
+                    <div class="card-body">
+                    <p class="card-text">The sun disappeared behind the horizon today. Experts claim it could be gone for good!</p>
+                    <a href="#" class="btn btn-primary">Edit profile</a>
+                    </div>
+                    
+            </div>
       </div>
       <div class="col-md-7 offset-md-1">
           Right
