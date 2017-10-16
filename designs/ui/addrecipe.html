@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Add Recipe</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/yummy.css">
+
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <!-- <link rel="icon" type="image/png" href="images/favico3232.png"> -->
+
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <nav class="navbar navbar-expand-sm navbar-light" style="background: rgb(199, 103, 68);">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content" aria-controls="nav-content" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Brand -->
+        <a class="navbar-brand" href="#"><h1>Yummy Recipes</h1></a>
+        
+        <!-- Links -->
+        <div class="collapse navbar-collapse" id="nav-content">   
+          <ul class="navbar-nav">
+            <li class="nav-item">
+            <a class="nav-link" href="#">Categories</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Recipes</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Logout</a>
+            </li>
+          </ul>
+        </div>                
+    </nav>
+    <div class="row" style="margin-top: 10px;">
+      <div class="col-md-3">
+        <div class="yummy-card">
+          <img class="yummy-image img-thumbnail" src="images/background.jpg" alt="Profile Image">
+          <span class="yummy-username">Username</span>
+          <span class="yummy-job">Chef at Kempinski</span>
+          <hr>
+          <p class="yummy-info"><a href="#">Categories : <span>13</span></a></p>
+          <p class="yummy-info"><a href="#">Recipes : <span>28</span></a></p>
+          <hr>
+          <a class="nav-link" href="#">Logout</a>
+        </div>
+      </div>
+      <div class="col-md-7 offset-md-1">
+          <div class="yummy-card">
+            <h3 class="yummy-heading">Add New Recipe</h3>
+            <hr>
+            <form class="yummy-form">
+                <legend>Add New Recipe</legend>
+                <fieldset class="form-group">
+                        <label for="recipename"><i class="fa fa-bolt" aria-hidden="true"></i> Recipe name</label>
+                        <input type="text" name="recipename" id="recipename" class="form-control" placeholder="Recipe name" required>
+                </fieldset>
+                <fieldset class="form-group">
+                    <label for="recipeingredients"><i class="fa fa-bolt" aria-hidden="true"></i> Recipe ingredients</label>
+                    <textarea name="recipeingredients" id="recipeingredients" class="form-control" placeholder="Recipe ingredients" required></textarea>
+                </fieldset>
+                <fieldset class="form-group">
+                        <label for="recipedescription"><i class="fa fa-bolt" aria-hidden="true"></i> Recipe description</label>
+                        <textarea name="recipedescription" id="recipedescription" class="form-control" placeholder="Recipe description" required></textarea>
+                </fieldset>
+                <fieldset class="form-group">
+                    <label for="recipecategory"><i class="fa fa-bolt" aria-hidden="true"></i> Recipe category</label>
+                    <select name="recipecategory" id="recipecategory" class="form-control custom-select" required>
+                        <option selected>Choose Category...</option>
+                        <option value="1">Indian cuisine</option>
+                        <option value="2">Chinese cuisine</option>
+                        <option value="3">African cuisine</option>
+                        <option value="4">Western cuisine</option>
+                        <option value="5">Italian cuisine</option>
+                    </select>
+                </fieldset>
+                <fieldset class="form-group">
+                        <label for="recipepicture"><i class="fa fa-bolt" aria-hidden="true"></i> Recipe picture</label>
+                        <input type="file" name="recipepicture" id="recipepicture" class="form-control" placeholder="Recipe picture" required>
+                </fieldset>
+                <button type="submit" class="btn btn-success btn-block"><i class="fa fa-2x fa-plus" aria-hidden="true"></i> Add New Recipe</button>
+            </form>
+            <hr>
+            <a href="#"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+          </div>
+      </div>
+    </div>
+  </div>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>
