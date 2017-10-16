@@ -8,7 +8,7 @@ body{
 }
 
 hr{
-    color: rgba(88, 86, 81, 0.5);
+    background-color: rgba(88, 86, 81, 0.5);
 }
 
 .yummy-card{
@@ -19,4 +19,13 @@ hr{
     background-color: #FFFFFF;
     display: flex;
     flex-direction: column;
+}
+
+.yummy-username{
+    font-size: larger;
+}
+
+.yummy-job{
+    font-size: small;
+    color: rgba(139, 137, 132, 0.5);
 }
