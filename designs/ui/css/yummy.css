@@ -29,3 +29,7 @@ hr{
     font-size: small;
     color: rgba(139, 137, 132, 0.5);
 }
+
+.yummy-category, .yummy-recipe{
+    margin-left: 5px; 
+}
