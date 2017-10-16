@@ -4,6 +4,7 @@ Yummy recipes provides a platform for users to keep track of their awesome recip
 To view the templates visit;
 ## Sign Up
 https://sylvance.github.io/yummyrecipes/designs/ui/signup.html
+![Alt text](https://sylvance.github.io/yummyrecipes/designs/ui/images/signup.png?raw=true "Sign Up")
 ## Sign In
 https://sylvance.github.io/yummyrecipes/designs/ui/signin.html
 
