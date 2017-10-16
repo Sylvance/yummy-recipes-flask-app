@@ -10,6 +10,7 @@ https://sylvance.github.io/yummyrecipes/designs/ui/signin.html
 
 ## Profile
 https://sylvance.github.io/yummyrecipes/designs/ui/profile.html
+![Alt text](https://sylvance.github.io/yummyrecipes/designs/ui/images/profile.png?raw=true "Profile")
 
 ## Add Category
  https://sylvance.github.io/yummyrecipes/designs/ui/addcategory.html
@@ -28,3 +29,4 @@ https://sylvance.github.io/yummyrecipes/designs/ui/profile.html
  https://sylvance.github.io/yummyrecipes/designs/ui/viewrecipe.html
  ## Single Recipe
  https://sylvance.github.io/yummyrecipes/designs/ui/recipe.html
+ ![Alt text](https://sylvance.github.io/yummyrecipes/designs/ui/images/recipe.png?raw=true "Recipe")
