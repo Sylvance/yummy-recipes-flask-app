@@ -2,10 +2,10 @@ from flask import render_template
 from app import app
 
 @app.route('/')
-@app.route('/index')
+@app.route('/home')
 def index():
     user = {'nickname': 'Sylvance'}  
-    return render_template('index.html',
+    return render_template('home.html',
                            title='Home',
                            user=user)
 @app.route('/addcategory')
