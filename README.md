@@ -1,4 +1,5 @@
 # Yummy Recipes
+[![Build Status](https://travis-ci.org/Sylvance/yummyrecipes.svg?branch=master)](https://travis-ci.org/Sylvance/yummyrecipes)
 Yummy recipes provides a platform for users to keep track of their awesome recipes and share with others if they so wish.
 
 To view the templates visit;
