@@ -1,5 +1,6 @@
-from flask import render_template
+from flask import render_template, flash, redirect
 from app import app
+from .forms import SigninForm
 
 @app.route('/')
 @app.route('/home')
@@ -57,12 +58,17 @@ def recipe():
                            title='recipe',
                            user=user)
 
-@app.route('/signin')
+@app.route('/signin', methods=['GET', 'POST'])
 def signin():
-    user = {'nickname': 'Sylvance', 'job' : 'Carpernter', 'categoriesno' : 8, 'recipesno' : 23}  
+    form = SigninForm()
+    if form.validate_on_submit():
+        flash('Signin requested for OpenID="%s", remember_me=%s' %
+              (form.openid.data, str(form.remember_me.data)))
+        return redirect('/home')
     return render_template('signin.html',
                            title='signin',
-                           user=user)
+                           form=form,
+                           providers=app.config['OPENID_PROVIDERS'])
 
 @app.route('/signup')
 def signup():
