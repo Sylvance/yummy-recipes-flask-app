@@ -67,8 +67,8 @@
           <span class="yummy-username">@{{ user.nickname }}</span>
           <span class="yummy-job">{{ user.job }}</span>
           <hr>
-          <p class="yummy-info"><a href="#">Categories : <span>13</span></a></p>
-          <p class="yummy-info"><a href="#">Recipes : <span>28</span></a></p>
+          <p class="yummy-info"><a href="#">Categories : <span>{{ user.categoriesno }}</span></a></p>
+          <p class="yummy-info"><a href="#">Recipes : <span>{{ user.recipesno }}</span></a></p>
           <hr>
           <a class="nav-link" href="#">Logout</a>
         </div>
