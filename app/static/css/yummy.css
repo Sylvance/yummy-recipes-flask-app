@@ -1,0 +1,35 @@
+body{
+    background-color: #f4f3ef;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+}
+
+hr{
+    background-color: rgba(88, 86, 81, 0.5);
+}
+
+.yummy-card{
+    margin-top: 5px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 2px rgba(139, 137, 132, 0.5);
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+}
+
+.yummy-username{
+    font-size: larger;
+}
+
+.yummy-job{
+    font-size: small;
+    color: rgba(139, 137, 132, 0.5);
+}
+
+.yummy-category, .yummy-recipe{
+    margin-left: 5px; 
+}
