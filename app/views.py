@@ -1,6 +1,11 @@
 from flask import render_template, flash, redirect
 from app import app
-from .forms import SigninForm
+from .forms import (SigninForm,
+                    SignupForm,
+                    AddcategoryForm,
+                    AddrecipeForm,
+                    EditcategoryForm,
+                    EditrecipeForm)
 
 @app.route('/')
 @app.route('/home')
@@ -9,19 +14,27 @@ def index():
     return render_template('home.html',
                            title='Home',
                            user=user)
-@app.route('/addcategory')
+@app.route('/addcategory', methods=['GET', 'POST'])
 def addcategory():
     user = {'nickname': 'Sylvance', 'job' : 'Carpernter', 'categoriesno' : 8, 'recipesno' : 23}
+    form = AddcategoryForm()
+    if form.validate_on_submit():
+        return redirect('/profile')
     return render_template('addcategory.html',
                            title='addcategory',
-                           user=user)
+                           user=user,
+                           form=form)
 
-@app.route('/addrecipe')
+@app.route('/addrecipe', methods=['GET', 'POST'])
 def addrecipe():
     user = {'nickname': 'Sylvance', 'job' : 'Carpernter', 'categoriesno' : 8, 'recipesno' : 23}
+    form = AddrecipeForm()
+    if form.validate_on_submit():
+        return redirect('/profile')
     return render_template('addrecipe.html',
                            title='addrecipe',
-                           user=user)
+                           user=user,
+                           form=form)
 
 @app.route('/category')
 def category():
@@ -30,19 +43,27 @@ def category():
                            title='category',
                            user=user)
 
-@app.route('/editcategory')
+@app.route('/editcategory', methods=['GET', 'POST'])
 def editcategory():
     user = {'nickname': 'Sylvance', 'job' : 'Carpernter', 'categoriesno' : 8, 'recipesno' : 23}
+    form = EditcategoryForm()
+    if form.validate_on_submit():
+        return redirect('/profile')
     return render_template('editcategory.html',
                            title='editcategory',
-                           user=user)
+                           user=user,
+                           form=form)
 
-@app.route('/editrecipe')
+@app.route('/editrecipe', methods=['GET', 'POST'])
 def editrecipe():
     user = {'nickname': 'Sylvance', 'job' : 'Carpernter', 'categoriesno' : 8, 'recipesno' : 23}
+    form = EditrecipeForm()
+    if form.validate_on_submit():
+        return redirect('/profile')
     return render_template('editrecipe.html',
                            title='editrecipe',
-                           user=user)
+                           user=user,
+                           form=form)
 
 @app.route('/profile')
 def profile():
@@ -64,18 +85,20 @@ def signin():
     if form.validate_on_submit():
         flash('Signin requested for OpenID="%s", remember_me=%s' %
               (form.openid.data, str(form.remember_me.data)))
-        return redirect('/home')
+        return redirect('/profile')
     return render_template('signin.html',
                            title='signin',
                            form=form,
                            providers=app.config['OPENID_PROVIDERS'])
 
-@app.route('/signup')
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    user = {'nickname': 'Sylvance', 'job' : 'Carpernter', 'categoriesno' : 8, 'recipesno' : 23}
+    form = SignupForm()
+    if form.validate_on_submit():
+        return redirect('/profile')
     return render_template('signup.html',
                            title='signup',
-                           user=user)
+                           form=form)
 
 @app.route('/viewcategory')
 def viewcategory():

@@ -3,7 +3,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        <form class="yummy-form">
+        <form class="yummy-form" action="" method="post" name="signup">
             <center>
                     <h3>Yummy Recipes</h3>
             </center>
@@ -24,6 +24,10 @@
             <fieldset class="form-group">
                     <label for="password_confirm"><i class="fa fa-lock" aria-hidden="true"></i> Password Confirm</label>
                     <input type="text" name="password_confirm" id="password_confirm" class="form-control" placeholder="Password Confirm" required>
+            </fieldset>
+            <fieldset class="form-group">
+                    <label for="email"><i class="fa fa-user" aria-hidden="true"></i> Remember</label>
+                    <p class="form-control">{{ form.remember_me }} Remember Me</p>
             </fieldset>
             <button type="submit" class="btn btn-success btn-block"><i class="fa fa-2x fa-unlock" aria-hidden="true"></i> Sign Up</button>
         </form>
