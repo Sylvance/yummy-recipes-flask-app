@@ -34,7 +34,7 @@
           <span class="yummy-job">{{ user.job }}</span>
           <div class="list-group">
             <hr>
-            <a href="{{ url_for('viewcategory') }}" class="list-group-item list-group-item-action">Profile</a>
+            <a href="{{ url_for('profile') }}" class="list-group-item list-group-item-action">Profile</a>
             <a href="{{ url_for('viewcategory') }}" class="list-group-item list-group-item-action list-group-item-info">Categories : <span>{{ user.categoriesno }}</span></a>
             <a href="{{ url_for('viewrecipe') }}" class="list-group-item list-group-item-action list-group-item-success">Recipes : <span>{{ user.recipesno }}</span></a>
             <hr>
