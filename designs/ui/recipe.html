@@ -43,34 +43,40 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        <a class="navbar-brand" href="#"><h1>Yummy Recipes</h1></a>
+        <a class="navbar-brand" href="home.html"><div class="yummy-logo">Y</div><div class="yummy-logos">ummy Recipes</div></a>
         
         <!-- Links -->
         <div class="collapse navbar-collapse" id="nav-content">   
           <ul class="navbar-nav">
             <li class="nav-item">
-            <a class="nav-link" href="#">Categories</a>
+            <a class="nav-link" href="profile.html">Profile</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="#">Recipes</a>
+            <a class="nav-link" href="viewcategory.html">Categories</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
+            <a class="nav-link" href="viewrecipe.html">Recipes</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="home.html">Logout</a>
             </li>
           </ul>
-        </div>                
+        </div>                   
     </nav>
     <div class="row" style="margin-top: 10px;">
-      <div class="col-md-3">
+      <div class="col-md-3 d-none d-md-block">
         <div class="yummy-card">
           <img class="yummy-image img-thumbnail" src="images/background.jpg" alt="Profile Image">
-          <span class="yummy-username">Username</span>
-          <span class="yummy-job">Chef at Kempinski</span>
-          <hr>
-          <p class="yummy-info"><a href="#">Categories : <span>13</span></a></p>
-          <p class="yummy-info"><a href="#">Recipes : <span>28</span></a></p>
-          <hr>
-          <a class="nav-link" href="#">Logout</a>
+          <span class="yummy-username">@{{ user.nickname }}</span>
+          <span class="yummy-job">{{ user.job }}</span>
+          <div class="list-group">
+            <hr>
+            <a href="profile.html" class="list-group-item list-group-item-action">Profile</a>
+            <a href="viewcategory.html" class="list-group-item list-group-item-action list-group-item-info">Categories : <span>{{ user.categoriesno }}</span></a>
+            <a href="viewrecipe.html" class="list-group-item list-group-item-action list-group-item-success">Recipes : <span>{{ user.recipesno }}</span></a>
+            <hr>
+            <a href="home.html" class="list-group-item list-group-item-action list-group-item-warning">Logout</a>
+          </div>
         </div>
       </div>
       <div class="col-md-7 offset-md-1">
@@ -80,17 +86,42 @@
             <img class="yummy-image img-thumbnail" src="images/background.jpg" alt="Recipe Image">
             <hr>
             <h5 class="yummy-head">Ingredients</h5>
-            <p class="yummy-recipe"><a href="#">Collard Greens with African White cake </a></p>
-            <p class="yummy-recipe"><a href="#">Yellowed Rice with Black Beans </a></p>
-            <p class="yummy-recipe"><a href="#">Chapati with Aurona stew </a></p>
-            <p class="yummy-recipe"><a href="#">Spicy bean stew with Cassava </a></p>
+            <p class="yummy-ingredient">Collard Greens with African White cake.</p>
+            <p class="yummy-ingredient">Yellowed Rice with Black Beans.</p>
+            <p class="yummy-ingredient">Chapati with Aurona stew.</p>
+            <p class="yummy-ingredient">Spicy bean stew with Cassava.</p>
             <hr>
             <h5 class="yummy-head">Description</h5>
-            <p class="yummy-recipe">This is the description fo how the recipe works. It is a step by step description of how to cook the course.</p>
+            <p class="yummy-description">1. This is the description fo how the recipe works. It is a step by step description of how to cook the course.
+              <br>
+              2. This is the description fo how the recipe works. It is a step by step description of how to cook the course.
+              <br>
+              3. This is the description fo how the recipe works. It is a step by step description of how to cook the course.
+            </p>
             <hr>
-            <a href="#" style="color:crimson;"><i class="fa fa-minus" aria-hidden="true"></i> Delete recipe</a>
+            <a href="#" style="color:crimson;" data-toggle="modal" data-target="#deleteRecipe"><i class="fa fa-minus" aria-hidden="true"></i> Delete recipe</a>
+            <!-- The modal -->
+            <div class="modal fade" id="deleteRecipe" tabindex="-1" role="dialog" aria-labelledby="modalLabelSmall" aria-hidden="true">
+              <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="modalLabelSmall">Delete recipe</h4>
+                  </div>
+
+                  <div class="modal-body">
+                    <p>Are you sure you want to delete this recipe?</p>
+                    <a href="#" class="btn btn-lg btn-block btn-danger"><i class="fa fa-minus" aria-hidden="true"></i> Delete recipe</a>
+                  </div>
+
+                </div>
+              </div>
+            </div>
             <hr>
-            <a href="#"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+            <a href="profile.html"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
           </div>
       </div>
     </div>

@@ -32,4 +32,71 @@ hr{
 
 .yummy-category, .yummy-recipe{
     margin-left: 5px; 
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 2px rgba(139, 137, 132, 0.5);
+    background-color: #00bcd4;
+}
+
+.yummy-category a, .yummy-recipe a {
+    float: left;
+    display: inline-block;
+    color : #ffffff;
+}
+
+.yummy-category span, .yummy-recipe span {
+    float: right;
+    display: inline-block;
+    margin-right: 7px;
+    font-size: medium;
+    font-weight: 900;
+}
+
+.yummy-category > span > a:hover, .yummy-recipe > span > a:hover {
+    text-decoration: none;
+    color: #fffccc;
+}
+
+.yummy-ingredient{
+    margin-left: 5px; 
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 2px rgba(139, 137, 132, 0.5);
+    background-color: #f8d61f;
+}
+
+.yummy-description{
+    margin-left: 5px; 
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 2px rgba(139, 137, 132, 0.5);
+    background-color: #f5f4f3;
+}
+
+.yummy-logo {
+  display: inline-block;
+  background-color: #009F7B;
+  color: white;
+  font: 32px/48px "Fredoka One", Helvetica, Arial, sans-serif;
+  height: 1.5em;
+  width: 1.5em;
+  text-align: center;
+  border: 5px solid white;
+  border-radius: 50%;
+  box-shadow: 0px 0px 0px 0.14em #009F7B;
+}
+
+a:hover .yummy-logo {
+  background-color: rgb(199, 103, 68);
+  box-shadow: 0px 0px 0px 0.13em rgb(199, 103, 68);
+}
+
+.yummy-logos {
+  display: inline-block;
+  margin-left: 5px;
+  color: white;
+  font: normal "Fredoka One", Helvetica, Arial, sans-serif;
+  height: 1.5em;
+  width: auto;
+  text-align: center;
 }

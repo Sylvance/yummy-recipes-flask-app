@@ -6,34 +6,40 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        <a class="navbar-brand" href="#"><h1>Yummy Recipes</h1></a>
+        <a class="navbar-brand" href="{{ url_for('index') }}"><div class="yummy-logo">Y</div><div class="yummy-logos">ummy Recipes</div></a>
         
         <!-- Links -->
         <div class="collapse navbar-collapse" id="nav-content">   
           <ul class="navbar-nav">
             <li class="nav-item">
-            <a class="nav-link" href="#">Categories</a>
+            <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="#">Recipes</a>
+            <a class="nav-link" href="{{ url_for('viewcategory') }}">Categories</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
+            <a class="nav-link" href="{{ url_for('viewrecipe') }}">Recipes</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('index') }}">Logout</a>
             </li>
           </ul>
-        </div>                
+        </div>                   
     </nav>
     <div class="row" style="margin-top: 10px;">
-      <div class="col-md-3">
+      <div class="col-md-3 d-none d-md-block">
         <div class="yummy-card">
-          <img class="yummy-image img-thumbnail" src="images/background.jpg" alt="Profile Image">
+          <img class="yummy-image img-thumbnail" src="{{url_for('static', filename='images/background.jpg') }}" alt="Profile Image">
           <span class="yummy-username">@{{ user.nickname }}</span>
           <span class="yummy-job">{{ user.job }}</span>
-          <hr>
-          <p class="yummy-info"><a href="#">Categories : <span>{{ user.categoriesno }}</span></a></p>
-          <p class="yummy-info"><a href="#">Recipes : <span>{{ user.recipesno }}</span></a></p>
-          <hr>
-          <a class="nav-link" href="#">Logout</a>
+          <div class="list-group">
+            <hr>
+            <a href="{{ url_for('profile') }}" class="list-group-item list-group-item-action">Profile</a>
+            <a href="{{ url_for('viewcategory') }}" class="list-group-item list-group-item-action list-group-item-info">Categories : <span>{{ user.categoriesno }}</span></a>
+            <a href="{{ url_for('viewrecipe') }}" class="list-group-item list-group-item-action list-group-item-success">Recipes : <span>{{ user.recipesno }}</span></a>
+            <hr>
+            <a href="{{ url_for('index') }}" class="list-group-item list-group-item-action list-group-item-warning">Logout</a>
+          </div>
         </div>
       </div>
       <div class="col-md-7 offset-md-1">
@@ -41,12 +47,14 @@
             <h3 class="yummy-heading">View Categories</h3>
             <hr>
             <h5 class="yummy-head">My Categories</h5>
-            <p class="yummy-category"><a href="#">Indian cuisine </a><span>X</span></p>
-            <p class="yummy-category"><a href="#">Chinese cuisine </a><span>X</span></p>
-            <p class="yummy-category"><a href="#">African cuisine </a><span>X</span></p>
-            <p class="yummy-category"><a href="#">Western cuisine </a><span>X</span></p>
+            <p class="yummy-category"><a href="{{ url_for('category') }}">Indian cuisine </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
+            <p class="yummy-category"><a href="{{ url_for('category') }}">Chinese cuisine </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
+            <p class="yummy-category"><a href="{{ url_for('category') }}">African cuisine </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
+            <p class="yummy-category"><a href="{{ url_for('category') }}">Western cuisine </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
             <hr>
-            <a href="#"><i class="fa fa-plus" aria-hidden="true"></i> Add new category</a>
+            <a href="{{ url_for('addcategory') }}" style="color: green;"><i class="fa fa-plus" aria-hidden="true"></i> Add new category</a>
+            <hr>
+            <a href="{{ url_for('profile') }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
           </div>
       </div>
     </div>
