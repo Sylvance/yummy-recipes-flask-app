@@ -7,4 +7,6 @@ install:
   - pip install -r requirements.txt
 
 script:
-  - sh run_travis.sh 
+  - sh run_travis.sh coveralls/tests.py --doctest-modules --pep8 coveralls -v --cov coveralls --cov-report term-missing
+after_success:
+  - coveralls

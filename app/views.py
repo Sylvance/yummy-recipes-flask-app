@@ -1,5 +1,6 @@
 """ Views file for the flask app"""
-from flask import render_template, flash, redirect
+from flask import render_template, flash, session, redirect, url_for, escape, request
+# from werkzeug.utils import secure_filename
 from app import app
 from .forms import (SigninForm,
                     SignupForm,
@@ -8,13 +9,19 @@ from .forms import (SigninForm,
                     EditcategoryForm,
                     EditrecipeForm)
 
+DATABASE = [
+    ("User1", "password"),
+    ("User2", "password")
+]
+
 
 @app.route('/')
 @app.route('/index')
 def index():
     """ Place a Docstring here """
-    user = {'nickname': 'Sylvance', 'job': 'Carpernter',
-            'categoriesno': 8, 'recipesno': 23}
+    if 'username' in session:
+        user = escape(session['username'])
+        return redirect('/profile')
     return render_template('home.html',
                            title='Home',
                            user=user)
@@ -67,7 +74,8 @@ def editcategory():
             'categoriesno': 8, 'recipesno': 23}
     form = EditcategoryForm()
     if form.validate_on_submit():
-
+        # f = request.files['the_file']
+        # f.save('/var/www/uploads/' + secure_filename(f.filename))
         return redirect('/profile')
     return render_template('editcategory.html',
                            title='editcategory',
@@ -114,11 +122,16 @@ def recipe():
 def signin():
     """ Place a Docstring here """
     form = SigninForm()
-    if form.validate_on_submit():
+    if request.method == 'POST':
+        if form.validate_on_submit():
 
-        flash('Signin requested for OpenID="%s", remember_me=%s' %
-              (form.openid.data, str(form.remember_me.data)))
-        return redirect('/profile')
+            session['username'] = request.form['username']
+            username = request.form['username']
+            password = request.form['username']
+            if (username, password) in DATABASE:
+                return redirect('/profile')
+            return redirect('/signin')
+
     return render_template('signin.html',
                            title='signin',
                            form=form,
@@ -155,6 +168,16 @@ def viewrecipe():
     return render_template('viewrecipe.html',
                            title='viewrecipe',
                            user=user)
+
+
+@app.route('/logout')
+def logout():
+    """ remove the username from the session if it's there """
+    session.pop('username', None)
+    return redirect(url_for('index'))
+
+# set the secret key.  keep this really secret:
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 if __name__ == '__main__':
     app.run(debug=True,
