@@ -8,7 +8,7 @@ from .forms import (SigninForm,
                     EditrecipeForm)
 
 @app.route('/')
-@app.route('/home')
+@app.route('/index')
 def index():
     user = {'nickname': 'Sylvance', 'job' : 'Carpernter', 'categoriesno' : 8, 'recipesno' : 23}
     return render_template('home.html',

@@ -6,7 +6,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        <a class="navbar-brand" href="{{ url_for('home') }}"><h1>Yummy Recipes</h1></a>
+        <a class="navbar-brand" href="{{ url_for('index') }}"><h1>Yummy Recipes</h1></a>
         
         <!-- Links -->
         <div class="collapse navbar-collapse" id="nav-content">   
@@ -18,7 +18,7 @@
             <a class="nav-link" href="{{ url_for('viewrecipe') }}">Recipes</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('home') }}">Logout</a>
+            <a class="nav-link" href="{{ url_for('index') }}">Logout</a>
             </li>
           </ul>
         </div>                 
@@ -33,7 +33,7 @@
           <p class="yummy-info"><a href="{{ url_for('viewcategory') }}">Categories : <span>{{ user.categoriesno }}</span></a></p>
           <p class="yummy-info"><a href="{{ url_for('viewrecipe') }}">Recipes : <span>{{ user.recipesno }}</span></a></p>
           <hr>
-          <a class="nav-link" href="{{ url_for('home') }}">Logout</a>
+          <a class="nav-link" href="{{ url_for('index') }}">Logout</a>
         </div>
       </div>
       <div class="col-md-7 offset-md-1">
