@@ -44,16 +44,18 @@
             <p class="yummy-info">This is where your bio is supposed to be. A short sentence describing yourself.</p>
             <hr>
             <h5 class="yummy-head">My Categories</h5>
-            <p class="yummy-category"><a href="{{ url_for('category') }}">Indian cuisine </a><span>X</span></p>
-            <p class="yummy-category"><a href="{{ url_for('category') }}">Chinese cuisine </a><span>X</span></p>
-            <p class="yummy-category"><a href="{{ url_for('category') }}">African cuisine </a><span>X</span></p>
-            <p class="yummy-category"><a href="{{ url_for('category') }}">Western cuisine </a><span>X</span></p>
+            <p class="yummy-category"><a href="{{ url_for('category') }}">Indian cuisine </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
+            <p class="yummy-category"><a href="{{ url_for('category') }}">Chinese cuisine </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
+            <p class="yummy-category"><a href="{{ url_for('category') }}">African cuisine </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
+            <p class="yummy-category"><a href="{{ url_for('category') }}">Western cuisine </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
+            <a href="{{ url_for('addcategory') }}" style="margin-left: 15px; color: green;"><i class="fa fa-plus" aria-hidden="true"></i> Add new category</a>
             <hr>
             <h5 class="yummy-head">My Recipes</h5>
-            <p class="yummy-recipe"><a href="{{ url_for('recipe') }}">Collard Greens with African White cake </a><span>X</span></p>
-            <p class="yummy-recipe"><a href="{{ url_for('recipe') }}">Yellowed Rice with Black Beans </a><span>X</span></p>
-            <p class="yummy-recipe"><a href="{{ url_for('recipe') }}">Chapati with Aurona stew </a><span>X</span></p>
-            <p class="yummy-recipe"><a href="{{ url_for('recipe') }}">Spicy bean stew with Cassava </a><span>X</span></p>
+            <p class="yummy-recipe"><a href="{{ url_for('recipe') }}">Collard Greens with African White cake </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
+            <p class="yummy-recipe"><a href="{{ url_for('recipe') }}">Yellowed Rice with Black Beans </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
+            <p class="yummy-recipe"><a href="{{ url_for('recipe') }}">Chapati with Aurona stew </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
+            <p class="yummy-recipe"><a href="{{ url_for('recipe') }}">Spicy bean stew with Cassava </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
+            <a href="{{ url_for('addrecipe') }}" style="margin-left: 15px; color: green;"><i class="fa fa-plus" aria-hidden="true"></i> Add new recipe</a>
           </div>
       </div>
     </div>

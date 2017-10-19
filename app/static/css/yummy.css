@@ -32,4 +32,22 @@ hr{
 
 .yummy-category, .yummy-recipe{
     margin-left: 5px; 
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 2px rgba(139, 137, 132, 0.5);
+    background-color: #00bcd4;
+}
+
+.yummy-category a, .yummy-recipe a {
+    float: left;
+    display: inline-block;
+    color : #ffffff;
+}
+
+.yummy-category span, .yummy-recipe span {
+    float: right;
+    display: inline-block;
+    margin-right: 7px;
+    font-size: medium;
+    font-weight: 900;
 }

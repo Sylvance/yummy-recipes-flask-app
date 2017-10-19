@@ -41,12 +41,12 @@
             <h3 class="yummy-heading">View Categories</h3>
             <hr>
             <h5 class="yummy-head">My Categories</h5>
-            <p class="yummy-category"><a href="{{ url_for('category') }}">Indian cuisine </a><span>X</span></p>
-            <p class="yummy-category"><a href="{{ url_for('category') }}">Chinese cuisine </a><span>X</span></p>
-            <p class="yummy-category"><a href="{{ url_for('category') }}">African cuisine </a><span>X</span></p>
-            <p class="yummy-category"><a href="{{ url_for('category') }}">Western cuisine </a><span>X</span></p>
+            <p class="yummy-category"><a href="{{ url_for('category') }}">Indian cuisine </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
+            <p class="yummy-category"><a href="{{ url_for('category') }}">Chinese cuisine </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
+            <p class="yummy-category"><a href="{{ url_for('category') }}">African cuisine </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
+            <p class="yummy-category"><a href="{{ url_for('category') }}">Western cuisine </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
             <hr>
-            <a href="{{ url_for('addcategory') }}"><i class="fa fa-plus" aria-hidden="true"></i> Add new category</a>
+            <a href="{{ url_for('addcategory') }}" style="color: green;"><i class="fa fa-plus" aria-hidden="true"></i> Add new category</a>
             <hr>
             <a href="{{ url_for('profile') }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
           </div>
