@@ -29,11 +29,13 @@
           <img class="yummy-image img-thumbnail" src="{{url_for('static', filename='images/background.jpg') }}" alt="Profile Image">
           <span class="yummy-username">@{{ user.nickname }}</span>
           <span class="yummy-job">{{ user.job }}</span>
-          <hr>
-          <p class="yummy-info"><a href="{{ url_for('viewcategory') }}">Categories : <span>{{ user.categoriesno }}</span></a></p>
-          <p class="yummy-info"><a href="{{ url_for('viewrecipe') }}">Recipes : <span>{{ user.recipesno }}</span></a></p>
-          <hr>
-          <a class="nav-link" href="{{ url_for('index') }}">Logout</a>
+          <div class="list-group">
+            <hr>
+            <a href="{{ url_for('viewcategory') }}" class="list-group-item list-group-item-action list-group-item-info">Categories : <span>{{ user.categoriesno }}</span></a>
+            <a href="{{ url_for('viewrecipe') }}" class="list-group-item list-group-item-action list-group-item-success">Recipes : <span>{{ user.recipesno }}</span></a>
+            <hr>
+            <a href="{{ url_for('index') }}" class="list-group-item list-group-item-action list-group-item-warning">Logout</a>
+          </div>
         </div>
       </div>
       <div class="col-md-7 offset-md-1">
@@ -47,7 +49,7 @@
             <p class="yummy-recipe"><a href="{{ url_for('recipe') }}">Spicy bean stew with Cassava </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
             <hr>
             <h5 class="yummy-head">Description</h5>
-            <p class="yummy-recipe">This is the description for how the category.</p>
+            <p class="yummy-description">This is the description for how the category.</p>
             <hr>
             <a href="#" style="color:crimson;"><i class="fa fa-minus" aria-hidden="true"></i> Delete Category</a>
             <hr>

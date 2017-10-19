@@ -29,11 +29,13 @@
           <img class="yummy-image img-thumbnail" src="{{url_for('static', filename='images/background.jpg') }}" alt="Profile Image">
           <span class="yummy-username">@{{ user.nickname }}</span>
           <span class="yummy-job">{{ user.job }}</span>
-          <hr>
-          <p class="yummy-info"><a href="{{ url_for('viewcategory') }}">Categories : <span>{{ user.categoriesno }}</span></a></p>
-          <p class="yummy-info"><a href="{{ url_for('viewrecipe') }}">Recipes : <span>{{ user.recipesno }}</span></a></p>
-          <hr>
-          <a class="nav-link" href="{{ url_for('index') }}">Logout</a>
+          <div class="list-group">
+            <hr>
+            <a href="{{ url_for('viewcategory') }}" class="list-group-item list-group-item-action list-group-item-info">Categories : <span>{{ user.categoriesno }}</span></a>
+            <a href="{{ url_for('viewrecipe') }}" class="list-group-item list-group-item-action list-group-item-success">Recipes : <span>{{ user.recipesno }}</span></a>
+            <hr>
+            <a href="{{ url_for('index') }}" class="list-group-item list-group-item-action list-group-item-warning">Logout</a>
+          </div>
         </div>
       </div>
       <div class="col-md-7 offset-md-1">
@@ -43,13 +45,18 @@
             <img class="yummy-image img-thumbnail" src="{{url_for('static', filename='images/background.jpg') }}" alt="Recipe Image">
             <hr>
             <h5 class="yummy-head">Ingredients</h5>
-            <p class="yummy-recipe">Collard Greens with African White cake.</p>
-            <p class="yummy-recipe">Yellowed Rice with Black Beans.</p>
-            <p class="yummy-recipe">Chapati with Aurona stew.</p>
-            <p class="yummy-recipe">Spicy bean stew with Cassava.</p>
+            <p class="yummy-ingredient">Collard Greens with African White cake.</p>
+            <p class="yummy-ingredient">Yellowed Rice with Black Beans.</p>
+            <p class="yummy-ingredient">Chapati with Aurona stew.</p>
+            <p class="yummy-ingredient">Spicy bean stew with Cassava.</p>
             <hr>
             <h5 class="yummy-head">Description</h5>
-            <p class="yummy-recipe">This is the description fo how the recipe works. It is a step by step description of how to cook the course.</p>
+            <p class="yummy-description">1. This is the description fo how the recipe works. It is a step by step description of how to cook the course.
+              <br>
+              2. This is the description fo how the recipe works. It is a step by step description of how to cook the course.
+              <br>
+              3. This is the description fo how the recipe works. It is a step by step description of how to cook the course.
+            </p>
             <hr>
             <a href="#" style="color:crimson;"><i class="fa fa-minus" aria-hidden="true"></i> Delete recipe</a>
             <hr>
