@@ -19,8 +19,6 @@ DATABASE = [
 @app.route('/index')
 def index():
     """ Place a Docstring here """
-    if username in session:
-        return redirect('/profile')
     return render_template('home.html',
                            title='Home')
 
