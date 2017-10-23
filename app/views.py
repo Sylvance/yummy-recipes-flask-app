@@ -19,12 +19,8 @@ DATABASE = [
 @app.route('/index')
 def index():
     """ Place a Docstring here """
-    if 'username' in session:
-        user = escape(session['username'])
-        return redirect('/profile')
     return render_template('home.html',
-                           title='Home',
-                           user=user)
+                           title='Home')
 
 
 @app.route('/addcategory', methods=['GET', 'POST'])
@@ -127,7 +123,7 @@ def signin():
 
             session['username'] = request.form['username']
             username = request.form['username']
-            password = request.form['username']
+            password = request.form['password']
             if (username, password) in DATABASE:
                 return redirect('/profile')
             return redirect('/signin')
