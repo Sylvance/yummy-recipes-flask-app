@@ -130,8 +130,7 @@ def signin():
 
     return render_template('signin.html',
                            title='signin',
-                           form=form,
-                           providers=app.config['OPENID_PROVIDERS'])
+                           form=form)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -179,3 +178,4 @@ if __name__ == '__main__':
     app.run(debug=True,
             host="0.0.0.0",
             port="8888")
+
