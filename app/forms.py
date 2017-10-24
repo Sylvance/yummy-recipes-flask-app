@@ -3,21 +3,6 @@ from flask_wtf import Form
 from wtforms import StringField, BooleanField
 from wtforms.validators import DataRequired
 
-
-class SigninForm(Form):
-    """ Form"""
-    openid = StringField('openid', validators=[DataRequired()])
-    remember_me = BooleanField('remember_me', default=False)
-
-
-class SignupForm(Form):
-    """ Form"""
-    username = StringField('username', validators=[DataRequired()])
-    email = StringField('email', validators=[DataRequired()])
-    password = StringField('password', validators=[DataRequired()])
-    remember_me = BooleanField('remember_me', default=False)
-
-
 class AddcategoryForm(Form):
     """ Form"""
     categoryname = StringField('categoryname', validators=[DataRequired()])
