@@ -17,22 +17,20 @@
         <div class="row">
           <div class="col-md-6 offset-md-3">
             <form class="yummy-form" action="" method="post" name="signin">
-                {{ form.hidden_tag() }}
                 <h3>Yummy Recipes</h3>
                 <legend>Sign In</legend>
-                <p>Please enter your OpenID, or select one of the providers below:<br></p>
+                <p>Have no account? <a href="{{ url_for('signup') }}">Sign up</a>.</p>
                 <fieldset class="form-group">
-                        <label for="email"><i class="fa fa-user" aria-hidden="true"></i> OpenID</label>
-                        <p class="form-control">{{ form.openid }}</p>
-                        <p class="form-control">{{ form.remember_me }} Remember Me</p>
+                        <label for="username"><i class="fa fa-user" aria-hidden="true"></i> Username</label>
+                        <input type="text" name="username" id="username" class="form-control" placeholder="Username" required>
                 </fieldset>
                 <fieldset class="form-group">
-                        {% for error in form.openid.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}<br>
-                        |{% for pr in providers %}
-                            <a href="javascript:set_openid('{{ pr.url }}', '{{ pr.name }}');">{{ pr.name }}</a> |
-                        {% endfor %}
+                        <label for="password"><i class="fa fa-lock" aria-hidden="true"></i> Password</label>
+                        <input type="text" name="password" id="password" class="form-control" placeholder="Password" required>
+                </fieldset>
+                <fieldset class="form-group">
+                        <label for="email"><i class="fa fa-user" aria-hidden="true"></i> Remember</label>
+                        <p class="form-control">{{ form.remember_me }} Remember Me</p>
                 </fieldset>
                 <button type="submit" class="btn btn-success btn-block"><i class="fa fa-2x fa-unlock" aria-hidden="true"></i> Sign In</button>
             </form>
