@@ -2,9 +2,7 @@
 from flask import render_template, flash, session, redirect, url_for, escape, request
 # from werkzeug.utils import secure_filename
 from app import app
-from .forms import (SigninForm,
-                    SignupForm,
-                    AddcategoryForm,
+from .forms import (AddcategoryForm,
                     AddrecipeForm,
                     EditcategoryForm,
                     EditrecipeForm)
@@ -117,32 +115,29 @@ def recipe():
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
     """ Place a Docstring here """
-    form = SigninForm()
     if request.method == 'POST':
-        if form.validate_on_submit():
 
-            session['username'] = request.form['username']
-            username = request.form['username']
-            password = request.form['password']
-            if (username, password) in DATABASE:
-                return redirect('/profile')
-            return redirect('/signin')
+        session['username'] = request.form['username']
+        username = request.form['username']
+        password = request.form['password']
+        if (username, password) in DATABASE:
+            return redirect('/profile')
+        return redirect('/signin')
 
     return render_template('signin.html',
-                           title='signin',
-                           form=form)
-
+                           title='signin')
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     """ Place a Docstring here """
-    form = SignupForm()
-    if form.validate_on_submit():
-
+    if request.method == 'POST':
+        session['username'] = request.form['username']
+        newusername = request.form['username']
+        newpassword = request.form['password']
+        DATABASE.append((newusername, newpassword))
         return redirect('/profile')
     return render_template('signup.html',
-                           title='signup',
-                           form=form)
+                           title='signup')
 
 
 @app.route('/viewcategory')
