@@ -2,10 +2,6 @@
 from flask import render_template, session, redirect, url_for, request
 # from werkzeug.utils import secure_filename
 from app import app
-from .forms import (AddcategoryForm,
-                    AddrecipeForm,
-                    EditcategoryForm,
-                    EditrecipeForm)
 
 DATABASE = [
     ("User1", "password"),
@@ -25,27 +21,17 @@ def index():
 @app.route('/addcategory', methods=['GET', 'POST'])
 def addcategory():
     """ Place a Docstring here """
-    form = AddcategoryForm()
-    if form.validate_on_submit():
-
-        return redirect('/profile')
     return render_template('addcategory.html',
                            title='addcategory',
-                           user=USER,
-                           form=form)
+                           user=USER)
 
 
 @app.route('/addrecipe', methods=['GET', 'POST'])
 def addrecipe():
     """ Place a Docstring here """
-    form = AddrecipeForm()
-    if form.validate_on_submit():
-
-        return redirect('/profile')
     return render_template('addrecipe.html',
                            title='addrecipe',
-                           user=USER,
-                           form=form)
+                           user=USER)
 
 
 @app.route('/category')
@@ -59,28 +45,17 @@ def category():
 @app.route('/editcategory', methods=['GET', 'POST'])
 def editcategory():
     """ Place a Docstring here """
-    form = EditcategoryForm()
-    if form.validate_on_submit():
-        # f = request.files['the_file']
-        # f.save('/var/www/uploads/' + secure_filename(f.filename))
-        return redirect('/profile')
     return render_template('editcategory.html',
                            title='editcategory',
-                           user=USER,
-                           form=form)
+                           user=USER)
 
 
 @app.route('/editrecipe', methods=['GET', 'POST'])
 def editrecipe():
     """ Place a Docstring here """
-    form = EditrecipeForm()
-    if form.validate_on_submit():
-
-        return redirect('/profile')
     return render_template('editrecipe.html',
                            title='editrecipe',
-                           user=USER,
-                           form=form)
+                           user=USER)
 
 
 @app.route('/profile')
