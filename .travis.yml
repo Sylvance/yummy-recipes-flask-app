@@ -9,6 +9,6 @@ install:
 script:
   - sh run_travis.sh
   - nosetests --exe --with-coverage --cover-package=runtest
-  - coveralls/tests.py --doctest-modules --pep8 coveralls -v --cov coveralls --cov-report term-missing
+  - coveralls
 after_success:
   - coveralls
