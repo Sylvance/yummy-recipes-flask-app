@@ -13,14 +13,14 @@ USER = {'nickname': 'Sylvance', 'job': 'Carpernter', 'categoriesno': 8, 'recipes
 @app.route('/')
 @app.route('/index')
 def index():
-    """ Place a Docstring here """
+    """ Here the user sees the signup and signin gateways """
     return render_template('home.html',
                            title='Home')
 
 
 @app.route('/addcategory', methods=['GET', 'POST'])
 def addcategory():
-    """ Place a Docstring here """
+    """ A form to add a new category """
     return render_template('addcategory.html',
                            title='addcategory',
                            user=USER)
@@ -28,7 +28,7 @@ def addcategory():
 
 @app.route('/addrecipe', methods=['GET', 'POST'])
 def addrecipe():
-    """ Place a Docstring here """
+    """ A form that adds a new recipe """
     return render_template('addrecipe.html',
                            title='addrecipe',
                            user=USER)
@@ -36,7 +36,7 @@ def addrecipe():
 
 @app.route('/category')
 def category():
-    """ Place a Docstring here """
+    """ This is a view page for the category """
     return render_template('category.html',
                            title='category',
                            user=USER)
@@ -44,7 +44,7 @@ def category():
 
 @app.route('/editcategory', methods=['GET', 'POST'])
 def editcategory():
-    """ Place a Docstring here """
+    """ A form that edits the category """
     return render_template('editcategory.html',
                            title='editcategory',
                            user=USER)
@@ -52,7 +52,7 @@ def editcategory():
 
 @app.route('/editrecipe', methods=['GET', 'POST'])
 def editrecipe():
-    """ Place a Docstring here """
+    """ Here you can edit the details of the recipe """
     return render_template('editrecipe.html',
                            title='editrecipe',
                            user=USER)
@@ -60,7 +60,7 @@ def editrecipe():
 
 @app.route('/profile')
 def profile():
-    """ Place a Docstring here """
+    """ Here the use r can view his/her profile """
     return render_template('profile.html',
                            title='profile',
                            user=USER)
@@ -68,7 +68,7 @@ def profile():
 
 @app.route('/recipe')
 def recipe():
-    """ Place a Docstring here """
+    """ This is where you view the recipe"""
     return render_template('recipe.html',
                            title='recipe',
                            user=USER)
@@ -76,7 +76,7 @@ def recipe():
 
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
-    """ Place a Docstring here """
+    """ This is the page where you sign in """
     if request.method == 'POST':
 
         session['username'] = request.form['username']
@@ -91,7 +91,7 @@ def signin():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    """ Place a Docstring here """
+    """ This is a form that takes sign up details """
     if request.method == 'POST':
         session['username'] = request.form['username']
         newusername = request.form['username']
@@ -104,7 +104,7 @@ def signup():
 
 @app.route('/viewcategory')
 def viewcategory():
-    """ Place a Docstring here """
+    """ You can view the list of categories """
     return render_template('viewcategory.html',
                            title='viewcategory',
                            user=USER)
@@ -112,7 +112,7 @@ def viewcategory():
 
 @app.route('/viewrecipe')
 def viewrecipe():
-    """ Place a Docstring here """
+    """ You can see a list of recipes """
     return render_template('viewrecipe.html',
                            title='viewrecipe',
                            user=USER)
