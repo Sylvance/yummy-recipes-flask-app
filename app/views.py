@@ -1,120 +1,82 @@
 """ Views file for the flask app"""
-from flask import render_template, flash, session, redirect, url_for, escape, request
+from flask import render_template, session, redirect, url_for, request
 # from werkzeug.utils import secure_filename
 from app import app
-from .forms import (AddcategoryForm,
-                    AddrecipeForm,
-                    EditcategoryForm,
-                    EditrecipeForm)
 
 DATABASE = [
     ("User1", "password"),
     ("User2", "password")
 ]
 
+USER = {'nickname': 'Sylvance', 'job': 'Carpernter', 'categoriesno': 8, 'recipesno': 23}
 
 @app.route('/')
 @app.route('/index')
 def index():
-    """ Place a Docstring here """
+    """ Here the user sees the signup and signin gateways """
     return render_template('home.html',
                            title='Home')
 
 
 @app.route('/addcategory', methods=['GET', 'POST'])
 def addcategory():
-    """ Place a Docstring here """
-    user = {'nickname': 'Sylvance', 'job': 'Carpernter',
-            'categoriesno': 8, 'recipesno': 23}
-    form = AddcategoryForm()
-    if form.validate_on_submit():
-
-        return redirect('/profile')
+    """ A form to add a new category """
     return render_template('addcategory.html',
                            title='addcategory',
-                           user=user,
-                           form=form)
+                           user=USER)
 
 
 @app.route('/addrecipe', methods=['GET', 'POST'])
 def addrecipe():
-    """ Place a Docstring here """
-    user = {'nickname': 'Sylvance', 'job': 'Carpernter',
-            'categoriesno': 8, 'recipesno': 23}
-    form = AddrecipeForm()
-    if form.validate_on_submit():
-
-        return redirect('/profile')
+    """ A form that adds a new recipe """
     return render_template('addrecipe.html',
                            title='addrecipe',
-                           user=user,
-                           form=form)
+                           user=USER)
 
 
 @app.route('/category')
 def category():
-    """ Place a Docstring here """
-    user = {'nickname': 'Sylvance', 'job': 'Carpernter',
-            'categoriesno': 8, 'recipesno': 23}
+    """ This is a view page for the category """
     return render_template('category.html',
                            title='category',
-                           user=user)
+                           user=USER)
 
 
 @app.route('/editcategory', methods=['GET', 'POST'])
 def editcategory():
-    """ Place a Docstring here """
-    user = {'nickname': 'Sylvance', 'job': 'Carpernter',
-            'categoriesno': 8, 'recipesno': 23}
-    form = EditcategoryForm()
-    if form.validate_on_submit():
-        # f = request.files['the_file']
-        # f.save('/var/www/uploads/' + secure_filename(f.filename))
-        return redirect('/profile')
+    """ A form that edits the category """
     return render_template('editcategory.html',
                            title='editcategory',
-                           user=user,
-                           form=form)
+                           user=USER)
 
 
 @app.route('/editrecipe', methods=['GET', 'POST'])
 def editrecipe():
-    """ Place a Docstring here """
-    user = {'nickname': 'Sylvance', 'job': 'Carpernter',
-            'categoriesno': 8, 'recipesno': 23}
-    form = EditrecipeForm()
-    if form.validate_on_submit():
-
-        return redirect('/profile')
+    """ Here you can edit the details of the recipe """
     return render_template('editrecipe.html',
                            title='editrecipe',
-                           user=user,
-                           form=form)
+                           user=USER)
 
 
 @app.route('/profile')
 def profile():
-    """ Place a Docstring here """
-    user = {'nickname': 'Sylvance', 'job': 'Carpernter',
-            'categoriesno': 8, 'recipesno': 23}
+    """ Here the use r can view his/her profile """
     return render_template('profile.html',
                            title='profile',
-                           user=user)
+                           user=USER)
 
 
 @app.route('/recipe')
 def recipe():
-    """ Place a Docstring here """
-    user = {'nickname': 'Sylvance', 'job': 'Carpernter',
-            'categoriesno': 8, 'recipesno': 23}
+    """ This is where you view the recipe"""
     return render_template('recipe.html',
                            title='recipe',
-                           user=user)
+                           user=USER)
 
 
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
-    """ Place a Docstring here """
+    """ This is the page where you sign in """
     if request.method == 'POST':
 
         session['username'] = request.form['username']
@@ -129,7 +91,7 @@ def signin():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    """ Place a Docstring here """
+    """ This is a form that takes sign up details """
     if request.method == 'POST':
         session['username'] = request.form['username']
         newusername = request.form['username']
@@ -142,22 +104,18 @@ def signup():
 
 @app.route('/viewcategory')
 def viewcategory():
-    """ Place a Docstring here """
-    user = {'nickname': 'Sylvance', 'job': 'Carpernter',
-            'categoriesno': 8, 'recipesno': 23}
+    """ You can view the list of categories """
     return render_template('viewcategory.html',
                            title='viewcategory',
-                           user=user)
+                           user=USER)
 
 
 @app.route('/viewrecipe')
 def viewrecipe():
-    """ Place a Docstring here """
-    user = {'nickname': 'Sylvance', 'job': 'Carpernter',
-            'categoriesno': 8, 'recipesno': 23}
+    """ You can see a list of recipes """
     return render_template('viewrecipe.html',
                            title='viewrecipe',
-                           user=user)
+                           user=USER)
 
 
 @app.route('/logout')
@@ -173,4 +131,3 @@ if __name__ == '__main__':
     app.run(debug=True,
             host="0.0.0.0",
             port="8888")
-
