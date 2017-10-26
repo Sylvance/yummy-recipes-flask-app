@@ -43,12 +43,6 @@ class BasicTestCase(unittest.TestCase):
         response = tester.get('/editrecipe', content_type='html/text')
         self.assertEqual(response.status_code, 200)
 
-    def test_home(self):
-        """ A test"""
-        tester = APP.test_client(self)
-        response = tester.get('/home', content_type='html/text')
-        self.assertEqual(response.status_code, 200)
-
     def test_profile(self):
         """ A test"""
         tester = APP.test_client(self)
