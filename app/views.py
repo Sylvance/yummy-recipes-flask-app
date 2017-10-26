@@ -1,7 +1,7 @@
-""" Views file for the flask app"""
+""" Views file for the Flask APP"""
 from flask import render_template, session, redirect, url_for, request
 # from werkzeug.utils import secure_filename
-from app import app
+from app import APP
 
 DATABASE = [
     ("User1", "password"),
@@ -10,15 +10,15 @@ DATABASE = [
 
 USER = {'nickname': 'Sylvance', 'job': 'Carpernter', 'categoriesno': 8, 'recipesno': 23}
 
-@app.route('/')
-@app.route('/index')
+@APP.route('/')
+@APP.route('/index')
 def index():
     """ Here the user sees the signup and signin gateways """
     return render_template('home.html',
                            title='Home')
 
 
-@app.route('/addcategory', methods=['GET', 'POST'])
+@APP.route('/addcategory', methods=['GET', 'POST'])
 def addcategory():
     """ A form to add a new category """
     return render_template('addcategory.html',
@@ -26,7 +26,7 @@ def addcategory():
                            user=USER)
 
 
-@app.route('/addrecipe', methods=['GET', 'POST'])
+@APP.route('/addrecipe', methods=['GET', 'POST'])
 def addrecipe():
     """ A form that adds a new recipe """
     return render_template('addrecipe.html',
@@ -34,7 +34,7 @@ def addrecipe():
                            user=USER)
 
 
-@app.route('/category')
+@APP.route('/category')
 def category():
     """ This is a view page for the category """
     return render_template('category.html',
@@ -42,7 +42,7 @@ def category():
                            user=USER)
 
 
-@app.route('/editcategory', methods=['GET', 'POST'])
+@APP.route('/editcategory', methods=['GET', 'POST'])
 def editcategory():
     """ A form that edits the category """
     return render_template('editcategory.html',
@@ -50,7 +50,7 @@ def editcategory():
                            user=USER)
 
 
-@app.route('/editrecipe', methods=['GET', 'POST'])
+@APP.route('/editrecipe', methods=['GET', 'POST'])
 def editrecipe():
     """ Here you can edit the details of the recipe """
     return render_template('editrecipe.html',
@@ -58,7 +58,7 @@ def editrecipe():
                            user=USER)
 
 
-@app.route('/profile')
+@APP.route('/profile')
 def profile():
     """ Here the use r can view his/her profile """
     return render_template('profile.html',
@@ -66,7 +66,7 @@ def profile():
                            user=USER)
 
 
-@app.route('/recipe')
+@APP.route('/recipe')
 def recipe():
     """ This is where you view the recipe"""
     return render_template('recipe.html',
@@ -74,7 +74,7 @@ def recipe():
                            user=USER)
 
 
-@app.route('/signin', methods=['GET', 'POST'])
+@APP.route('/signin', methods=['GET', 'POST'])
 def signin():
     """ This is the page where you sign in """
     if request.method == 'POST':
@@ -89,7 +89,7 @@ def signin():
     return render_template('signin.html',
                            title='signin')
 
-@app.route('/signup', methods=['GET', 'POST'])
+@APP.route('/signup', methods=['GET', 'POST'])
 def signup():
     """ This is a form that takes sign up details """
     if request.method == 'POST':
@@ -102,7 +102,7 @@ def signup():
                            title='signup')
 
 
-@app.route('/viewcategory')
+@APP.route('/viewcategory')
 def viewcategory():
     """ You can view the list of categories """
     return render_template('viewcategory.html',
@@ -110,7 +110,7 @@ def viewcategory():
                            user=USER)
 
 
-@app.route('/viewrecipe')
+@APP.route('/viewrecipe')
 def viewrecipe():
     """ You can see a list of recipes """
     return render_template('viewrecipe.html',
@@ -118,16 +118,16 @@ def viewrecipe():
                            user=USER)
 
 
-@app.route('/logout')
+@APP.route('/logout')
 def logout():
     """ remove the username from the session if it's there """
     session.pop('username', None)
     return redirect(url_for('index'))
 
 # set the secret key.  keep this really secret:
-app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+APP.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 if __name__ == '__main__':
-    app.run(debug=True,
+    APP.run(debug=True,
             host="0.0.0.0",
             port="8888")
