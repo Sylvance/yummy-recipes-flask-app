@@ -7,3 +7,7 @@ Yummy recipes provides a platform for users to keep track of their awesome recip
 To view the templates or designs repo visit;
 ## Yummy recipes designs Repo
 https://github.com/Sylvance/yummy-recipes-designs
+
+## Heroku
+You will find the app live on Heroku here;
+https://tamurecipes.herokuapp.com
