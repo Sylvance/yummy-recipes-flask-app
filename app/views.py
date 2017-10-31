@@ -10,6 +10,9 @@ RECIPES = []
 
 DATABASE = {}
 
+DUMMYUSER = {'nickname': 'Sylvance', 'job': 'Carpernter', 'categoriesno': 8, 'recipesno': 23}
+
+
 
 class User(object):
     """ Users class """
@@ -133,7 +136,8 @@ def index():
 def addcategory():
     """ A form to add a new category """
     return render_template('addcategory.html',
-                           title='addcategory')
+                           title='addcategory',
+                           user=DUMMYUSER)
 
 
 @APP.route('/addrecipe', methods=['GET', 'POST'])
@@ -147,42 +151,48 @@ def addrecipe():
     #     recipecategory = request.form['recipecategory']
     #     return redirect('/profile')
     return render_template('addrecipe.html',
-                           title='addrecipe')
+                           title='addrecipe',
+                           user=DUMMYUSER)
 
 
 @APP.route('/category')
 def category():
     """ This is a view page for the category """
     return render_template('category.html',
-                           title='category')
+                           title='category',
+                           user=DUMMYUSER)
 
 
 @APP.route('/editcategory', methods=['GET', 'POST'])
 def editcategory():
     """ A form that edits the category """
     return render_template('editcategory.html',
-                           title='editcategory')
+                           title='editcategory',
+                           user=DUMMYUSER)
 
 
 @APP.route('/editrecipe', methods=['GET', 'POST'])
 def editrecipe():
     """ Here you can edit the details of the recipe """
     return render_template('editrecipe.html',
-                           title='editrecipe')
+                           title='editrecipe',
+                           user=DUMMYUSER)
 
 
 @APP.route('/profile')
 def profile():
     """ Here the use r can view his/her profile """
     return render_template('profile.html',
-                           title='profile')
+                           title='profile',
+                           user=DUMMYUSER)
 
 
 @APP.route('/recipe')
 def recipe():
     """ This is where you view the recipe"""
     return render_template('recipe.html',
-                           title='recipe')
+                           title='recipe',
+                           user=DUMMYUSER)
 
 
 @APP.route('/signin', methods=['GET', 'POST'])
@@ -217,14 +227,16 @@ def signup():
 def viewcategory():
     """ You can view the list of categories """
     return render_template('viewcategory.html',
-                           title='viewcategory')
+                           title='viewcategory',
+                           user=DUMMYUSER)
 
 
 @APP.route('/viewrecipe')
 def viewrecipe():
     """ You can see a list of recipes """
     return render_template('viewrecipe.html',
-                           title='viewrecipe')
+                           title='viewrecipe',
+                           user=DUMMYUSER)
 
 
 @APP.route('/logout')
