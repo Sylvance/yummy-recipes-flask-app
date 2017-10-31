@@ -10,50 +10,107 @@ RECIPES = []
 
 DATABASE = {}
 
-def add_dbuser(username, bio, password):
-    USERS.append(username)
-    DATABASE[user]['password'] = password
-    DATABASE[user]['categories'] = []
-    DATABASE[user]['recipes'] = []
+class User(object):
+    """ Users class """
+
+    def __init__(self):
+        self.id = ''
+        self.password = ''
+        self.bio = ''
+        self.categories = []
+        self.recipes = []
+
+    def add_dbuser(username, bio, password):
+        USERS.append(username)
+        DATABASE[user]['password'] = password
+        DATABASE[user]['bio'] = bio
+        DATABASE[user]['categories'] = []
+        DATABASE[user]['recipes'] = []
+
+    def edit_dbuserpassword(username, password):
+        DATABASE[user]['password'] = password
+
+    def edit_dbuserbio(username, bio):
+        DATABASE[user]['bio'] = bio
+
+    def view_dbuser(user):
+        DATABASE[user]
+
+    def delete_dbuser(user, recipeid):
+    del DATABASE[user]
 
 
+class Categories(object):
+    """ Categories class """
 
-def add_dbrecipe(owner, recipename, recipedescription, recipeingredients, recipecategory):
-  if owner in list(DATABASE.keys()):
-    RECIPES.append(recipename)
-    recipeid = RECIPES[-1]
-    recipe = {
-      'owner': owner,
-      'recipeid' : recipeid,
-      'recipename': recipename,
-      'recipeingredients': recipeingredients,
-      'recipedescription': recipedescription,
-      'recipecategory': recipecategory
-    }
-    DATABASE[owner]['recipes'].append(recipe)
+    def __init__(self):
+        self.owner = ''
+        self.categoryname = ''
+        self.categorydescription = ''
+
+    def add_dbcategory(owner, categoryname, categorydescription):
+        if owner in list(DATABASE.keys()):
+            category = {
+                'owner': owner,
+                'categoryname': categoryname,
+                'categorydescription': categorydescription
+            }
+            CATEGORIES.append(categoryname)
+            DATABASE[owner]['categories'].append(category)
+
+    def edit_dbcategory(owner, categoryname, categorydescription):
+        if owner in list(DATABASE.keys()):
+            category = {
+                'owner': owner,
+                'categoryname': categoryname,
+                'categorydescription': categorydescription
+            }
+            CATEGORIES.append(categoryname)
+            DATABASE[owner]['categories'].append(category)
+
+    def view_dbusercategories(user):
+        DATABASE[user]['categories']
+
+    def view_dbcategory(user, categoryid):
+        DATABASE[user]['categories'][categoryid]
+
+    def del_dbcategory(user, categoryid):
+    del DATABASE[user]['categories'][categoryid]
 
 
-def add_dbcategory(owner, categoryname, categorydescription):
-  if owner in list(DATABASE.keys()):
-    category = {
-        'owner': owner,
-        'categoryname': categoryname,
-        'categorydescription': categorydescription
-    }
-    CATEGORIES.append(categoryname)
-    DATABASE[owner]['categories'].append(category)
+class Recipes(object):
+    """ Recipes class """
 
-def view_dbuserrecipes(user):
-  DATABASE[user]['recipes']
+    def __init__(self):
+        self.owner = ''
+        self.recipename = ''
+        self.recipedescription = ''
+        self.recipeingredients = ''
+        self.recipecategory = ''
 
-def view_dbrecipe(user, recipeid):
-  DATABASE[user]['recipes'][recipeid]
+    def add_dbrecipe(owner, recipename, recipedescription, recipeingredients, recipecategory):
+        if owner in list(DATABASE.keys()):
+            RECIPES.append(recipename)
+            recipeid = RECIPES[-1]
+            recipe = {
+                'owner': owner,
+                'recipeid': recipeid,
+                'recipename': recipename,
+                'recipeingredients': recipeingredients,
+                'recipedescription': recipedescription,
+                'recipecategory': recipecategory
+            }
+            DATABASE[owner]['recipes'].append(recipe)
 
-def view_dbusercategories(user):
-  DATABASE[user]['categories']
+    def view_dbuserrecipes(user):
+        DATABASE[user]['recipes']
 
-def view_dbcategory(user, categoryid):
-  DATABASE[user]['categories'][categoryid]
+    def view_dbrecipe(user, recipeid):
+        DATABASE[user]['recipes'][recipeid]
+
+    def delete_dbrecipe(user, recipeid):
+    del DATABASE[user]['recipes'][recipeid]
+
 
 @APP.route('/')
 @APP.route('/index')
