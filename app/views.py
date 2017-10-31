@@ -3,12 +3,57 @@ from flask import render_template, session, redirect, url_for, request
 # from werkzeug.utils import secure_filename
 from app import APP
 
-DATABASE = [
-    ("User1", "password"),
-    ("User2", "password")
-]
+USERS = []
+PASSWORDS = []
+CATEGORIES = []
+RECIPES = []
 
-USER = {'nickname': 'Sylvance', 'job': 'Carpernter', 'categoriesno': 8, 'recipesno': 23}
+DATABASE = {}
+
+def add_dbuser(username, bio, password):
+    USERS.append(username)
+    DATABASE[user]['password'] = password
+    DATABASE[user]['categories'] = []
+    DATABASE[user]['recipes'] = []
+
+
+
+def add_dbrecipe(owner, recipename, recipedescription, recipeingredients, recipecategory):
+  if owner in list(DATABASE.keys()):
+    RECIPES.append(recipename)
+    recipeid = RECIPES[-1]
+    recipe = {
+      'owner': owner,
+      'recipeid' : recipeid,
+      'recipename': recipename,
+      'recipeingredients': recipeingredients,
+      'recipedescription': recipedescription,
+      'recipecategory': recipecategory
+    }
+    DATABASE[owner]['recipes'].append(recipe)
+
+
+def add_dbcategory(owner, categoryname, categorydescription):
+  if owner in list(DATABASE.keys()):
+    category = {
+        'owner': owner,
+        'categoryname': categoryname,
+        'categorydescription': categorydescription
+    }
+    CATEGORIES.append(categoryname)
+    DATABASE[owner]['categories'].append(category)
+
+def view_dbuserrecipes(user):
+  DATABASE[user]['recipes']
+
+def view_dbrecipe(user, recipeid):
+  DATABASE[user]['recipes'][recipeid]
+
+def view_dbusercategories(user):
+  DATABASE[user]['categories']
+
+def view_dbcategory(user, categoryid):
+  DATABASE[user]['categories'][categoryid]
 
 @APP.route('/')
 @APP.route('/index')
@@ -23,15 +68,25 @@ def addcategory():
     """ A form to add a new category """
     return render_template('addcategory.html',
                            title='addcategory',
-                           user=USER)
+                           user=session['username'])
 
 
 @APP.route('/addrecipe', methods=['GET', 'POST'])
 def addrecipe():
     """ A form that adds a new recipe """
+    recipename = request.form['recipename']
+    recipeingredients = request.form['recipeingredients']
+    recipedescription = request.form['recipedescription']
+    recipecategory = request.form['recipecategory']
+    recipe = {
+        'recipename': recipename,
+        'recipeingredients': recipeingredients,
+        'recipedescription': recipedescription,
+        'recipecategory': recipecategory
+    }
     return render_template('addrecipe.html',
                            title='addrecipe',
-                           user=USER)
+                           user=session['username'])
 
 
 @APP.route('/category')
@@ -39,7 +94,7 @@ def category():
     """ This is a view page for the category """
     return render_template('category.html',
                            title='category',
-                           user=USER)
+                           user=session['username'])
 
 
 @APP.route('/editcategory', methods=['GET', 'POST'])
@@ -47,7 +102,7 @@ def editcategory():
     """ A form that edits the category """
     return render_template('editcategory.html',
                            title='editcategory',
-                           user=USER)
+                           user=session['username'])
 
 
 @APP.route('/editrecipe', methods=['GET', 'POST'])
@@ -55,7 +110,7 @@ def editrecipe():
     """ Here you can edit the details of the recipe """
     return render_template('editrecipe.html',
                            title='editrecipe',
-                           user=USER)
+                           user=session['username'])
 
 
 @APP.route('/profile')
@@ -63,7 +118,7 @@ def profile():
     """ Here the use r can view his/her profile """
     return render_template('profile.html',
                            title='profile',
-                           user=USER)
+                           user=session['username'])
 
 
 @APP.route('/recipe')
@@ -71,7 +126,7 @@ def recipe():
     """ This is where you view the recipe"""
     return render_template('recipe.html',
                            title='recipe',
-                           user=USER)
+                           user=session['username'])
 
 
 @APP.route('/signin', methods=['GET', 'POST'])
@@ -89,6 +144,7 @@ def signin():
     return render_template('signin.html',
                            title='signin')
 
+
 @APP.route('/signup', methods=['GET', 'POST'])
 def signup():
     """ This is a form that takes sign up details """
@@ -96,7 +152,6 @@ def signup():
         session['username'] = request.form['username']
         newusername = request.form['username']
         newpassword = request.form['password']
-        DATABASE.append((newusername, newpassword))
         return redirect('/profile')
     return render_template('signup.html',
                            title='signup')
@@ -107,7 +162,7 @@ def viewcategory():
     """ You can view the list of categories """
     return render_template('viewcategory.html',
                            title='viewcategory',
-                           user=USER)
+                           user=session['username'])
 
 
 @APP.route('/viewrecipe')
@@ -115,7 +170,7 @@ def viewrecipe():
     """ You can see a list of recipes """
     return render_template('viewrecipe.html',
                            title='viewrecipe',
-                           user=USER)
+                           user=session['username'])
 
 
 @APP.route('/logout')
