@@ -140,14 +140,13 @@ def addcategory():
 @APP.route('/addrecipe', methods=['GET', 'POST'])
 def addrecipe():
     """ A form that adds a new recipe """
-    if request.method == 'POST':
-
-        session['username'] = request.form['username']
-        recipename = request.form['recipename']
-        recipeingredients = request.form['recipeingredients']
-        recipedescription = request.form['recipedescription']
-        recipecategory = request.form['recipecategory']
-        return redirect('/profile')
+    # if request.method == 'POST':
+    #     session['username']
+    #     recipename = request.form['recipename']
+    #     recipeingredients = request.form['recipeingredients']
+    #     recipedescription = request.form['recipedescription']
+    #     recipecategory = request.form['recipecategory']
+    #     return redirect('/profile')
     return render_template('addrecipe.html',
                            title='addrecipe',
                            user=session['username'])
@@ -201,9 +200,9 @@ def signin():
         session['username'] = request.form['username']
         username = request.form['username']
         password = request.form['password']
-        if (username, password) in DATABASE:
-            return redirect('/profile')
-        return redirect('/signin')
+        # if (username, password) in DATABASE:
+        return redirect('/profile')
+        # return redirect('/signin')
 
     return render_template('signin.html',
                            title='signin')
