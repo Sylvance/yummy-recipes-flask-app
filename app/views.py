@@ -2,18 +2,20 @@
 from flask import render_template, session, redirect, url_for, request
 from wtforms import Form, StringField, PasswordField, TextField, validators
 from functools import  wraps
-# from werkzeug.utils import secure_filename
 from app import APP
+from .models.user import User
 
 users = []
 
 class RegisterForm(Form):
     """ create form input fields for register"""
-    username = StringField('Username', 
+    username = StringField('username', 
                             [validators.Length(min=1, max=50)])
-    email = TextField('Email',
+    email = TextField('email',
                          [validators.DataRequired(),
                           validators.Email()])
+    bio = TextField('bio',
+                         [validators.Length(min=1, max=255)])
     password = PasswordField('password', [
         validators.DataRequired(),
          validators.EqualTo('confirm',
@@ -23,7 +25,7 @@ class RegisterForm(Form):
 
 class LoginForm(Form):
     """create from input field for login"""
-    email = TextField('Email address', [
+    email = TextField('email', [
         validators.DataRequired(), validators.Email()])
     password = PasswordField('password',
                              [validators.DataRequired()
@@ -72,56 +74,49 @@ def index():
 def addcategory():
     """ A form to add a new category """
     return render_template('addcategory.html',
-                           title='addcategory',
-                           user=USER)
+                           title='addcategory')
 
 
 @APP.route('/addrecipe', methods=['GET', 'POST'])
 def addrecipe():
     """ A form that adds a new recipe """
     return render_template('addrecipe.html',
-                           title='addrecipe',
-                           user=USER)
+                           title='addrecipe')
 
 
 @APP.route('/category')
 def category():
     """ This is a view page for the category """
     return render_template('category.html',
-                           title='category',
-                           user=USER)
+                           title='category')
 
 
 @APP.route('/editcategory', methods=['GET', 'POST'])
 def editcategory():
     """ A form that edits the category """
     return render_template('editcategory.html',
-                           title='editcategory',
-                           user=USER)
+                           title='editcategory')
 
 
 @APP.route('/editrecipe', methods=['GET', 'POST'])
 def editrecipe():
     """ Here you can edit the details of the recipe """
     return render_template('editrecipe.html',
-                           title='editrecipe',
-                           user=USER)
+                           title='editrecipe')
 
 
 @APP.route('/profile')
 def profile():
     """ Here the use r can view his/her profile """
     return render_template('profile.html',
-                           title='profile',
-                           user=USER)
+                           title='profile')
 
 
 @APP.route('/recipe')
 def recipe():
     """ This is where you view the recipe"""
     return render_template('recipe.html',
-                           title='recipe',
-                           user=USER)
+                           title='recipe')
 
 
 @APP.route('/signin', methods=['GET', 'POST'])
@@ -142,30 +137,32 @@ def signin():
 @APP.route('/signup', methods=['GET', 'POST'])
 def signup():
     """ This is a form that takes sign up details """
-    if request.method == 'POST':
-        session['username'] = request.form['username']
-        newusername = request.form['username']
-        newpassword = request.form['password']
-        DATABASE.append((newusername, newpassword))
+    form = RegisterForm(request.form)
+    if request.method == "POST" and form.validate():
+        user = User(form.username.data, 
+                    form.email.data,
+                    form.bio.data,
+                    form.password.data
+                    )
+        users.append(user)
         return redirect('/profile')
     return render_template('signup.html',
-                           title='signup')
+                           title='signup',
+                           form=form)
 
 
 @APP.route('/viewcategory')
 def viewcategory():
     """ You can view the list of categories """
     return render_template('viewcategory.html',
-                           title='viewcategory',
-                           user=USER)
+                           title='viewcategory')
 
 
 @APP.route('/viewrecipe')
 def viewrecipe():
     """ You can see a list of recipes """
     return render_template('viewrecipe.html',
-                           title='viewrecipe',
-                           user=USER)
+                           title='viewrecipe')
 
 
 @APP.route('/logout')
