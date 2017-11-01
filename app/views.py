@@ -125,12 +125,13 @@ def addrecipe():
                 flash("You should login first")
     return render_template('addrecipe.html',
                            title='addrecipe',
+                           form=form,
                            user=currentuser)
 
 
-@APP.route('/category/<id>', methods=['GET', 'POST'])
+@APP.route('/category/<id>', methods=['GET'])
 @login_required
-def category():
+def category(id):
     """ This is a view page for the category """
     currentuser = provide_user()
     return render_template('category.html',
@@ -138,11 +139,21 @@ def category():
                            user=currentuser)
 
 
-@APP.route('/editcategory', methods=['GET', 'POST'])
+@APP.route('/editcategory/<id>', methods=['GET', 'POST'])
 @login_required
-def editcategory():
+def editcategory(id):
     """ A form that edits the category """
+    form = EditCategory(request.form)
     currentuser = provide_user()
+    error = None
+    if request.method == 'POST' and form.validate():
+        for user in users:
+            if user.email == session['logged_in']:
+                currentuser = user
+                user.update_category(id,
+                                     form.categorytitle.data,
+                                     form.categorydescription.data)
+                return redirect('/viewcategory')
     return render_template('editcategory.html',
                            title='editcategory',
                            user=currentuser)
