@@ -73,6 +73,7 @@ def login_required(f):
 
 @APP.route('/')
 @APP.route('/index')
+@login_required
 def index():
     """ Here the user sees the signup and signin gateways """
     return render_template('home.html',
@@ -80,6 +81,7 @@ def index():
 
 
 @APP.route('/addcategory', methods=['GET', 'POST'])
+@login_required
 def addcategory():
     """ A form to add a new category """
     return render_template('addcategory.html',
@@ -87,6 +89,7 @@ def addcategory():
 
 
 @APP.route('/addrecipe', methods=['GET', 'POST'])
+@login_required
 def addrecipe():
     """ A form that adds a new recipe """
     return render_template('addrecipe.html',
@@ -94,6 +97,7 @@ def addrecipe():
 
 
 @APP.route('/category')
+@login_required
 def category():
     """ This is a view page for the category """
     return render_template('category.html',
@@ -101,6 +105,7 @@ def category():
 
 
 @APP.route('/editcategory', methods=['GET', 'POST'])
+@login_required
 def editcategory():
     """ A form that edits the category """
     return render_template('editcategory.html',
@@ -108,6 +113,7 @@ def editcategory():
 
 
 @APP.route('/editrecipe', methods=['GET', 'POST'])
+@login_required
 def editrecipe():
     """ Here you can edit the details of the recipe """
     return render_template('editrecipe.html',
@@ -136,6 +142,7 @@ def recipe():
 
 
 @APP.route('/signin', methods=['GET', 'POST'])
+@login_required
 def signin():
     """ This is the page where you sign in """
     form = LoginForm(request.form)
@@ -154,6 +161,7 @@ def signin():
 
 
 @APP.route('/signup', methods=['GET', 'POST'])
+@login_required
 def signup():
     """ This is a form that takes sign up details """
     form = RegisterForm(request.form)
@@ -171,6 +179,7 @@ def signup():
 
 
 @APP.route('/viewcategory')
+@login_required
 def viewcategory():
     """ You can view the list of categories """
     return render_template('viewcategory.html',
@@ -178,6 +187,7 @@ def viewcategory():
 
 
 @APP.route('/viewrecipe')
+@login_required
 def viewrecipe():
     """ You can see a list of recipes """
     return render_template('viewrecipe.html',
@@ -185,6 +195,7 @@ def viewrecipe():
 
 
 @APP.route('/logout')
+@login_required
 def logout():
     """ remove the username from the session if it's there """
     session.pop('username', None)
