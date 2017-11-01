@@ -70,10 +70,12 @@ def login_required(f):
             return redirect(url_for('signin', next=request.url))
     return decorated_function
 
+
 def provide_user():
     for user in users:
-      if user.email == session['logged_in']:
-          return user
+        if user.email == session['logged_in']:
+            return user
+
 
 @APP.route('/')
 @APP.route('/index')
@@ -119,7 +121,8 @@ def addrecipe(id):
                 currentuser = user
                 for category in user.categories.values():
                     if id == category.id:
-                        category.add_recipe(form.recipetitle.data, form.recipedescription.data)
+                        category.add_recipe(
+                            form.recipetitle.data, form.recipedescription.data)
                         return redirect('/viewrecipe')
             else:
                 flash("You should login first")
@@ -171,13 +174,12 @@ def editrecipe(categoryid, recipeid):
             if user.email == session['logged_in']:
                 currentuser = user
                 user.categories[categoryid].edit_recipe(recipeid,
-                                     form.recipetitle.data,
-                                     form.recipedescription.data)
+                                                        form.recipetitle.data,
+                                                        form.recipedescription.data)
                 return redirect('/viewcategory')
     return render_template('editrecipe.html',
                            title='editrecipe',
                            user=currentuser)
-
 
 @APP.route('/profile', methods=['GET'])
 @login_required
@@ -189,9 +191,9 @@ def profile():
                            user=currentuser)
 
 
-@APP.route('/recipe', methods=['GET'])
+@APP.route('/recipe/<id>', methods=['GET'])
 @login_required
-def recipe():
+def recipe(id):
     """ This is where you view the recipe"""
     currentuser = provide_user()
     return render_template('recipe.html',
@@ -239,8 +241,12 @@ def signup():
 def viewcategory():
     """ You can view the list of categories """
     currentuser = provide_user()
+    for user in users:
+        if user.email == session['logged_in']:
+            categories = user.categories
     return render_template('viewcategory.html',
                            title='viewcategory',
+                           categories = categories,
                            user=currentuser)
 
 
