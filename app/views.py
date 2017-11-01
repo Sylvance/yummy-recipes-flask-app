@@ -73,7 +73,6 @@ def login_required(f):
 
 @APP.route('/')
 @APP.route('/index')
-@login_required
 def index():
     """ Here the user sees the signup and signin gateways """
     return render_template('home.html',
@@ -84,8 +83,12 @@ def index():
 @login_required
 def addcategory():
     """ A form to add a new category """
+    for user in users:
+        if user.email == session['logged_in']:
+            currentuser = user
     return render_template('addcategory.html',
-                           title='addcategory')
+                           title='addcategory',
+                           user = currentuser)
 
 
 @APP.route('/addrecipe', methods=['GET', 'POST'])
@@ -142,7 +145,6 @@ def recipe():
 
 
 @APP.route('/signin', methods=['GET', 'POST'])
-@login_required
 def signin():
     """ This is the page where you sign in """
     form = LoginForm(request.form)
@@ -154,14 +156,13 @@ def signin():
                 session['logged_in'] = user.email
                 return redirect('/profile')
             else:
-                flash("Invalid credentials")
+                flash("Your email or password is wrong")
     return render_template('signin.html',
                            title='signin',
                            form=form)
 
 
 @APP.route('/signup', methods=['GET', 'POST'])
-@login_required
 def signup():
     """ This is a form that takes sign up details """
     form = RegisterForm(request.form)
@@ -197,14 +198,6 @@ def viewrecipe():
 @APP.route('/logout')
 @login_required
 def logout():
-    """ remove the username from the session if it's there """
-    session.pop('username', None)
+    """ remove the session if it's there """
+    session.clear()
     return redirect(url_for('index'))
-
-# set the secret key.  keep this really secret:
-APP.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
-
-if __name__ == '__main__':
-    APP.run(debug=True,
-            host="0.0.0.0",
-            port="8888")
