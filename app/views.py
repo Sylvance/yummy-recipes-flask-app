@@ -108,7 +108,7 @@ def addcategory():
 
 @APP.route('/addrecipe/<id>', methods=['GET', 'POST'])
 @login_required
-def addrecipe():
+def addrecipe(id):
     """ A form that adds a new recipe """
     form = CreateRecipe(request.form)
     currentuser = provide_user()
@@ -159,11 +159,21 @@ def editcategory(id):
                            user=currentuser)
 
 
-@APP.route('/editrecipe', methods=['GET', 'POST'])
+@APP.route('/editrecipe/<categoryid>/<recipeid>', methods=['GET', 'POST'])
 @login_required
-def editrecipe():
+def editrecipe(categoryid, recipeid):
     """ Here you can edit the details of the recipe """
+    form = EditRecipe(request.form)
     currentuser = provide_user()
+    error = None
+    if request.method == 'POST' and form.validate():
+        for user in users:
+            if user.email == session['logged_in']:
+                currentuser = user
+                user.categories[categoryid].edit_recipe(recipeid,
+                                     form.recipetitle.data,
+                                     form.recipedescription.data)
+                return redirect('/viewcategory')
     return render_template('editrecipe.html',
                            title='editrecipe',
                            user=currentuser)
