@@ -3,139 +3,139 @@ from flask import render_template, session, redirect, url_for, request
 # from werkzeug.utils import secure_filename
 from app import APP
 
-USERS = []
-PASSWORDS = []
-CATEGORIES = []
-RECIPES = []
+# USERS = []
+# PASSWORDS = []
+# CATEGORIES = []
+# RECIPES = []
 
-DATABASE = {}
+# DATABASE = {}
 
 DUMMYUSER = {'nickname': 'Sylvance', 'job': 'Carpernter',
              'categoriesno': 8, 'recipesno': 23}
 
 
-class User(object):
-    """ Users class """
+# class User(object):
+#     """ Users class """
 
-    def __init__(self):
-        self.id = ''
-        self.password = ''
-        self.bio = ''
-        self.categories = []
-        self.recipes = []
+#     def __init__(self):
+#         self.id = ''
+#         self.password = ''
+#         self.bio = ''
+#         self.categories = []
+#         self.recipes = []
 
-    def add_dbuser(username, bio, password):
-        USERS.append(username)
-        DATABASE[username]['password'] = password
-        DATABASE[username]['bio'] = bio
-        DATABASE[username]['categories'] = []
-        DATABASE[username]['recipes'] = []
+#     def add_dbuser(username, bio, password):
+#         USERS.append(username)
+#         DATABASE[username]['password'] = password
+#         DATABASE[username]['bio'] = bio
+#         DATABASE[username]['categories'] = []
+#         DATABASE[username]['recipes'] = []
 
-    def edit_dbuserpassword(username, password):
-        DATABASE[username]['password'] = password
+#     def edit_dbuserpassword(username, password):
+#         DATABASE[username]['password'] = password
 
-    def edit_dbuserbio(username, bio):
-        DATABASE[username]['bio'] = bio
+#     def edit_dbuserbio(username, bio):
+#         DATABASE[username]['bio'] = bio
 
-    def view_dbuser(user):
-        DATABASE[user]
+#     def view_dbuser(user):
+#         DATABASE[user]
 
-    def delete_dbuser(user):
-        del DATABASE[user]
-
-
-class Categories(object):
-    """ Categories class """
-
-    def __init__(self):
-        self.owner = ''
-        self.categoryname = ''
-        self.categorydescription = ''
-
-    def add_dbcategory(owner,
-                       categoryname,
-                       categorydescription):
-        if owner in list(DATABASE.keys()):
-            category = {
-                'owner': owner,
-                'categoryname': categoryname,
-                'categorydescription': categorydescription
-            }
-            CATEGORIES.append(categoryname)
-            DATABASE[owner]['categories'].append(category)
-
-    def edit_dbcategory(owner,
-                        categoryname,
-                        categorydescription,
-                        categoryid):
-        if owner in list(DATABASE.keys()):
-            category = {
-                'owner': owner,
-                'categoryname': categoryname,
-                'categorydescription': categorydescription
-            }
-            CATEGORIES.append(categoryname)
-            DATABASE[owner]['categories'][categoryid] = category
-
-    def view_dbusercategories(user):
-        DATABASE[user]['categories']
-
-    def view_dbcategory(user, categoryid):
-        DATABASE[user]['categories'][categoryid]
-
-    def del_dbcategory(user, categoryid):
-        del DATABASE[user]['categories'][categoryid]
+#     def delete_dbuser(user):
+#         del DATABASE[user]
 
 
-class Recipes(object):
-    """ Recipes class """
+# class Categories(object):
+#     """ Categories class """
 
-    def __init__(self):
-        self.owner = ''
-        self.recipename = ''
-        self.recipedescription = ''
-        self.recipeingredients = ''
-        self.recipecategory = ''
+#     def __init__(self):
+#         self.owner = ''
+#         self.categoryname = ''
+#         self.categorydescription = ''
 
-    def add_dbrecipe(owner,
-                     recipename,
-                     recipedescription,
-                     recipeingredients,
-                     recipecategory):
-        if owner in list(DATABASE.keys()):
-            RECIPES.append(recipename)
-            recipeid = RECIPES[-1]
-            recipe = {
-                'owner': owner,
-                'recipeid': recipeid,
-                'recipename': recipename,
-                'recipeingredients': recipeingredients,
-                'recipedescription': recipedescription,
-                'recipecategory': recipecategory
-            }
-            DATABASE[owner]['recipes'].append(recipe)
+#     def add_dbcategory(owner,
+#                        categoryname,
+#                        categorydescription):
+#         if owner in list(DATABASE.keys()):
+#             category = {
+#                 'owner': owner,
+#                 'categoryname': categoryname,
+#                 'categorydescription': categorydescription
+#             }
+#             CATEGORIES.append(categoryname)
+#             DATABASE[owner]['categories'].append(category)
 
-    def edit_dbrecipe(owner,
-                      recipename,
-                      recipedescription,
-                      recipeid):
-        if owner in list(DATABASE.keys()):
-            recipe = {
-                'owner': owner,
-                'recipename': recipename,
-                'recipedescription': recipedescription
-            }
-            RECIPES.append(recipename)
-            DATABASE[owner]['recipes'][recipeid] = recipe
+#     def edit_dbcategory(owner,
+#                         categoryname,
+#                         categorydescription,
+#                         categoryid):
+#         if owner in list(DATABASE.keys()):
+#             category = {
+#                 'owner': owner,
+#                 'categoryname': categoryname,
+#                 'categorydescription': categorydescription
+#             }
+#             CATEGORIES.append(categoryname)
+#             DATABASE[owner]['categories'][categoryid] = category
 
-    def view_dbuserrecipes(user):
-        DATABASE[user]['recipes']
+#     def view_dbusercategories(user):
+#         DATABASE[user]['categories']
 
-    def view_dbrecipe(user, recipeid):
-        DATABASE[user]['recipes'][recipeid]
+#     def view_dbcategory(user, categoryid):
+#         DATABASE[user]['categories'][categoryid]
 
-    def delete_dbrecipe(user, recipeid):
-        del DATABASE[user]['recipes'][recipeid]
+#     def del_dbcategory(user, categoryid):
+#         del DATABASE[user]['categories'][categoryid]
+
+
+# class Recipes(object):
+#     """ Recipes class """
+
+#     def __init__(self):
+#         self.owner = ''
+#         self.recipename = ''
+#         self.recipedescription = ''
+#         self.recipeingredients = ''
+#         self.recipecategory = ''
+
+#     def add_dbrecipe(owner,
+#                      recipename,
+#                      recipedescription,
+#                      recipeingredients,
+#                      recipecategory):
+#         if owner in list(DATABASE.keys()):
+#             RECIPES.append(recipename)
+#             recipeid = RECIPES[-1]
+#             recipe = {
+#                 'owner': owner,
+#                 'recipeid': recipeid,
+#                 'recipename': recipename,
+#                 'recipeingredients': recipeingredients,
+#                 'recipedescription': recipedescription,
+#                 'recipecategory': recipecategory
+#             }
+#             DATABASE[owner]['recipes'].append(recipe)
+
+#     def edit_dbrecipe(owner,
+#                       recipename,
+#                       recipedescription,
+#                       recipeid):
+#         if owner in list(DATABASE.keys()):
+#             recipe = {
+#                 'owner': owner,
+#                 'recipename': recipename,
+#                 'recipedescription': recipedescription
+#             }
+#             RECIPES.append(recipename)
+#             DATABASE[owner]['recipes'][recipeid] = recipe
+
+#     def view_dbuserrecipes(user):
+#         DATABASE[user]['recipes']
+
+#     def view_dbrecipe(user, recipeid):
+#         DATABASE[user]['recipes'][recipeid]
+
+#     def delete_dbrecipe(user, recipeid):
+#         del DATABASE[user]['recipes'][recipeid]
 
 
 @APP.route('/')
