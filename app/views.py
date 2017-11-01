@@ -108,9 +108,9 @@ def addcategory():
                            user=currentuser)
 
 
-@APP.route('/addrecipe/<id>', methods=['GET', 'POST'])
+@APP.route('/addrecipe', methods=['GET', 'POST'])
 @login_required
-def addrecipe(id):
+def addrecipe():
     """ A form that adds a new recipe """
     form = CreateRecipe(request.form)
     currentuser = provide_user()
@@ -142,7 +142,7 @@ def category(categoryid):
             category = user.categories[categoryid]
     return render_template('category.html',
                            title='category',
-                           category=category
+                           category=category,
                            user=currentuser)
 
 @APP.route('/editcategory/<id>', methods=['GET', 'POST'])
@@ -232,8 +232,12 @@ def deleterecipe(categoryid, recipeid):
 def profile():
     """ Here the use r can view his/her profile """
     currentuser = provide_user()
+    for user in users:
+        if user.email == session['logged_in']:
+            categories = user.categories
     return render_template('profile.html',
                            title='profile',
+                           categories=categories,
                            user=currentuser)
 
 
