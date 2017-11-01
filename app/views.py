@@ -80,13 +80,19 @@ def index():
 
 
 @APP.route('/addcategory', methods=['GET', 'POST'])
+@login_required
 def addcategory():
     """ A form to add a new category """
+    for user in users:
+        if user.email == session['logged_in']:
+            currentuser = user
     return render_template('addcategory.html',
-                           title='addcategory')
+                           title='addcategory',
+                           user = currentuser)
 
 
 @APP.route('/addrecipe', methods=['GET', 'POST'])
+@login_required
 def addrecipe():
     """ A form that adds a new recipe """
     return render_template('addrecipe.html',
@@ -94,6 +100,7 @@ def addrecipe():
 
 
 @APP.route('/category')
+@login_required
 def category():
     """ This is a view page for the category """
     return render_template('category.html',
@@ -101,6 +108,7 @@ def category():
 
 
 @APP.route('/editcategory', methods=['GET', 'POST'])
+@login_required
 def editcategory():
     """ A form that edits the category """
     return render_template('editcategory.html',
@@ -108,6 +116,7 @@ def editcategory():
 
 
 @APP.route('/editrecipe', methods=['GET', 'POST'])
+@login_required
 def editrecipe():
     """ Here you can edit the details of the recipe """
     return render_template('editrecipe.html',
@@ -147,7 +156,7 @@ def signin():
                 session['logged_in'] = user.email
                 return redirect('/profile')
             else:
-                flash("Invalid credentials")
+                flash("Your email or password is wrong")
     return render_template('signin.html',
                            title='signin',
                            form=form)
@@ -171,6 +180,7 @@ def signup():
 
 
 @APP.route('/viewcategory')
+@login_required
 def viewcategory():
     """ You can view the list of categories """
     return render_template('viewcategory.html',
@@ -178,6 +188,7 @@ def viewcategory():
 
 
 @APP.route('/viewrecipe')
+@login_required
 def viewrecipe():
     """ You can see a list of recipes """
     return render_template('viewrecipe.html',
@@ -185,15 +196,8 @@ def viewrecipe():
 
 
 @APP.route('/logout')
+@login_required
 def logout():
-    """ remove the username from the session if it's there """
-    session.pop('username', None)
+    """ remove the session if it's there """
+    session.clear()
     return redirect(url_for('index'))
-
-# set the secret key.  keep this really secret:
-APP.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
-
-if __name__ == '__main__':
-    APP.run(debug=True,
-            host="0.0.0.0",
-            port="8888")

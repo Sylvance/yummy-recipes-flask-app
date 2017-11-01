@@ -1,4 +1,8 @@
 """ The app's Entry Point"""
 #! /usr/bin/env python
 from app import APP
-APP.run(debug=True, host="0.0.0.0", port=8080)
+
+if __name__ == '__main__':
+    # set the secret key.  keep this really secret:
+	APP.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+	APP.run(debug=True)
