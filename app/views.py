@@ -181,6 +181,19 @@ def editrecipe(categoryid, recipeid):
                            title='editrecipe',
                            user=currentuser)
 
+@APP.route('/deletecategory/<id>', methods=['GET'])
+@login_required
+def deletecategory(id):
+    """ A form that edits the category """
+    currentuser = provide_user()
+    error = None
+    if request.method == 'POST' and form.validate():
+        for user in users:
+            if user.email == session['logged_in']:
+                currentuser = user
+                user.delete_category(id)
+                return redirect('/viewcategory')
+
 
 @APP.route('/viewcategory')
 @login_required
