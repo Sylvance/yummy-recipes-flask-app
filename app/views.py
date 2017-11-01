@@ -1,14 +1,64 @@
 """ Views file for the Flask APP"""
 from flask import render_template, session, redirect, url_for, request
+from wtforms import Form, StringField, PasswordField, TextField, validators
+from functools import  wraps
 # from werkzeug.utils import secure_filename
 from app import APP
 
-DATABASE = [
-    ("User1", "password"),
-    ("User2", "password")
-]
+users = []
 
-USER = {'nickname': 'Sylvance', 'job': 'Carpernter', 'categoriesno': 8, 'recipesno': 23}
+class RegisterForm(Form):
+    """ create form input fields for register"""
+    username = StringField('Username', 
+                            [validators.Length(min=1, max=50)])
+    email = TextField('Email',
+                         [validators.DataRequired(),
+                          validators.Email()])
+    password = PasswordField('password', [
+        validators.DataRequired(),
+         validators.EqualTo('confirm',
+                             message='password do not match'),
+                              validators.Length(min=6, max=25)])
+    confirm = PasswordField('confirm password')
+
+class LoginForm(Form):
+    """create from input field for login"""
+    email = TextField('Email address', [
+        validators.DataRequired(), validators.Email()])
+    password = PasswordField('password',
+                             [validators.DataRequired()
+                            ])
+
+class CreateCategory(Form):
+    """create form input for category"""
+    categorytitle = StringField('categorytitle', [validators.DataRequired()])
+    categorydescription = StringField('categorydescription')
+
+class EditCategory(Form):
+    """create form input fields for edit"""
+    categorytitle = StringField('newtitle' , [validators.DataRequired()])
+    categorydescription = StringField('newdescription', [validators.DataRequired()])
+
+class CreateRecipe(Form):
+    """creates form input field for adding recipe"""
+    recipetitle = StringField('recipetitle', [validators.DataRequired()])
+    recipedescription = StringField('recipedescription')
+
+class EditRecipe(Form):
+    """creates form input field for editing recipe"""
+    recipetitle = StringField('newtitle' , [validators.DataRequired()])
+    recipedescription = StringField('newdescription', [validators.DataRequired()])
+
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash('Please login in first')
+            return redirect(url_for('login', next=request.url))
+    return decorated_function
 
 @APP.route('/')
 @APP.route('/index')
