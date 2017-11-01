@@ -132,15 +132,18 @@ def addrecipe(id):
                            user=currentuser)
 
 
-@APP.route('/category/<id>', methods=['GET'])
+@APP.route('/category/<categoryid>', methods=['GET'])
 @login_required
-def category(id):
+def category(categoryid):
     """ This is a view page for the category """
-    currentuser = provide_user()
+    currentuser = session['logged_in']
+    for user in users:
+        if user.email == session['logged_in']:
+            category = user.categories[categoryid]
     return render_template('category.html',
                            title='category',
+                           category=category
                            user=currentuser)
-
 
 @APP.route('/editcategory/<id>', methods=['GET', 'POST'])
 @login_required
@@ -161,7 +164,6 @@ def editcategory(id):
                            title='editcategory',
                            user=currentuser)
 
-
 @APP.route('/editrecipe/<categoryid>/<recipeid>', methods=['GET', 'POST'])
 @login_required
 def editrecipe(categoryid, recipeid):
@@ -181,27 +183,6 @@ def editrecipe(categoryid, recipeid):
                            title='editrecipe',
                            user=currentuser)
 
-@APP.route('/deletecategory/<id>', methods=['GET'])
-@login_required
-def deletecategory(id):
-    """ A form that edits the category """
-    for user in users:
-        if user.email == session['logged_in']:
-            currentuser = user
-            user.delete_category(id)
-            return redirect('/viewcategory')
-
-@APP.route('/deleterecipe/<categoryid>/<recipeid>', methods=['GET', 'POST'])
-@login_required
-def deleterecipe(categoryid, recipeid):
-    """ Here you can edit the details of the recipe """
-    for user in users:
-        if user.email == session['logged_in']:
-            currentuser = user
-            user.categories[categoryid].delete_recipe(recipeid)
-            return redirect('/deleterecipe')
-
-
 @APP.route('/viewcategory')
 @login_required
 def viewcategory():
@@ -214,7 +195,6 @@ def viewcategory():
                            title='viewcategory',
                            categories = categories,
                            user=currentuser)
-
 
 @APP.route('/viewrecipe')
 @login_required
@@ -229,6 +209,24 @@ def viewrecipe():
                            categories = categories,
                            user=currentuser)
 
+@APP.route('/deletecategory/<id>', methods=['GET'])
+@login_required
+def deletecategory(id):
+    """ A form that edits the category """
+    for user in users:
+        if user.email == session['logged_in']:
+            user.delete_category(id)
+            return redirect('/viewcategory')
+
+@APP.route('/deleterecipe/<categoryid>/<recipeid>', methods=['GET'])
+@login_required
+def deleterecipe(categoryid, recipeid):
+    """ Here you can edit the details of the recipe """
+    for user in users:
+        if user.email == session['logged_in']:
+            user.categories[categoryid].delete_recipe(recipeid)
+            return redirect('/viewrecipe')
+
 @APP.route('/profile', methods=['GET'])
 @login_required
 def profile():
@@ -239,13 +237,17 @@ def profile():
                            user=currentuser)
 
 
-@APP.route('/recipe/<id>', methods=['GET'])
+@APP.route('/recipe/<categoryid>/<recipeid>', methods=['GET'])
 @login_required
-def recipe(id):
+def recipe(categoryid, recipeid):
     """ This is where you view the recipe"""
     currentuser = provide_user()
+    for user in users:
+        if user.email == session['logged_in']:
+            recipe = user.categories[categoryid][recipeid]
     return render_template('recipe.html',
                            title='recipe',
+                           recipe = recipe,
                            user=currentuser)
 
 
