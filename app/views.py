@@ -255,8 +255,12 @@ def viewcategory():
 def viewrecipe():
     """ You can see a list of recipes """
     currentuser = provide_user()
+    for user in users:
+        if user.email == session['logged_in']:
+            categories = user.categories
     return render_template('viewrecipe.html',
                            title='viewrecipe',
+                           categories = categories,
                            user=currentuser)
 
 
