@@ -1,6 +1,6 @@
 """ Views file for the Flask APP"""
 from flask import render_template, session, redirect, url_for, flash, request
-from wtforms import Form, StringField, PasswordField, TextField, validators
+from wtforms import Form, StringField, PasswordField, TextField, TextAreaField, validators
 from functools import wraps
 from app import APP
 from .models.users import User
@@ -70,6 +70,10 @@ def login_required(f):
             return redirect(url_for('signin', next=request.url))
     return decorated_function
 
+def provide_user():
+    for user in users:
+      if user.email == session['logged_in']:
+          return user
 
 @APP.route('/')
 @APP.route('/index')
@@ -83,65 +87,83 @@ def index():
 @login_required
 def addcategory():
     """ A form to add a new category """
-    for user in users:
-        if user.email == session['logged_in']:
-            currentuser = user
+    form = CreateCategory(request.form)
+    currentuser = provide_user()
+    error = None
+    if request.method == 'POST' and form.validate():
+        for user in users:
+            if user.email == session['logged_in']:
+                currentuser = user
+                user.create_category(form.categorytitle.data,
+                                     form.categorydescription.data
+                                     )
+                return redirect('/category')
+            else:
+                flash("Your email or password is wrong")
     return render_template('addcategory.html',
                            title='addcategory',
-                           user = currentuser)
+                           form=form,
+                           user=currentuser)
 
 
 @APP.route('/addrecipe', methods=['GET', 'POST'])
 @login_required
 def addrecipe():
     """ A form that adds a new recipe """
+    currentuser = provide_user()
     return render_template('addrecipe.html',
-                           title='addrecipe')
+                           title='addrecipe',
+                           user=currentuser)
 
 
 @APP.route('/category')
 @login_required
 def category():
     """ This is a view page for the category """
+    currentuser = provide_user()
     return render_template('category.html',
-                           title='category')
+                           title='category',
+                           user=currentuser)
 
 
 @APP.route('/editcategory', methods=['GET', 'POST'])
 @login_required
 def editcategory():
     """ A form that edits the category """
+    currentuser = provide_user()
     return render_template('editcategory.html',
-                           title='editcategory')
+                           title='editcategory',
+                           user=currentuser)
 
 
 @APP.route('/editrecipe', methods=['GET', 'POST'])
 @login_required
 def editrecipe():
     """ Here you can edit the details of the recipe """
+    currentuser = provide_user()
     return render_template('editrecipe.html',
-                           title='editrecipe')
+                           title='editrecipe',
+                           user=currentuser)
 
 
 @APP.route('/profile', methods=['GET'])
 @login_required
 def profile():
     """ Here the use r can view his/her profile """
-    for user in users:
-        if user.email == session['logged_in']:
-            currentuser = user
-            return render_template('profile.html',
+    currentuser = provide_user()
+    return render_template('profile.html',
                            title='profile',
-                           user = currentuser)
-    return redirect(url_for('signin'))
+                           user=currentuser)
 
 
 @APP.route('/recipe', methods=['GET'])
 @login_required
 def recipe():
     """ This is where you view the recipe"""
+    currentuser = provide_user()
     return render_template('recipe.html',
-                           title='recipe')
+                           title='recipe',
+                           user=currentuser)
 
 
 @APP.route('/signin', methods=['GET', 'POST'])
@@ -183,16 +205,20 @@ def signup():
 @login_required
 def viewcategory():
     """ You can view the list of categories """
+    currentuser = provide_user()
     return render_template('viewcategory.html',
-                           title='viewcategory')
+                           title='viewcategory',
+                           user=currentuser)
 
 
 @APP.route('/viewrecipe')
 @login_required
 def viewrecipe():
     """ You can see a list of recipes """
+    currentuser = provide_user()
     return render_template('viewrecipe.html',
-                           title='viewrecipe')
+                           title='viewrecipe',
+                           user=currentuser)
 
 
 @APP.route('/logout')

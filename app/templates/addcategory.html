@@ -30,13 +30,13 @@
       <div class="col-md-3 d-none d-md-block">
         <div class="yummy-card">
           <img class="yummy-image img-thumbnail" src="{{url_for('static', filename='images/background.jpg') }}" alt="Profile Image">
-          <span class="yummy-username">@{{ user.nickname }}</span>
-          <span class="yummy-job">{{ user.job }}</span>
+          <span class="yummy-username">@{{ user.username }}</span>
+          <span class="yummy-job">{{ user.bio }}</span>
           <div class="list-group">
             <hr>
             <a href="{{ url_for('profile') }}" class="list-group-item list-group-item-action">Profile</a>
-            <a href="{{ url_for('viewcategory') }}" class="list-group-item list-group-item-action list-group-item-info">Categories : <span>{{ user.categoriesno }}</span></a>
-            <a href="{{ url_for('viewrecipe') }}" class="list-group-item list-group-item-action list-group-item-success">Recipes : <span>{{ user.recipesno }}</span></a>
+            <a href="{{ url_for('viewcategory') }}" class="list-group-item list-group-item-action list-group-item-info">Categories : <span>user.categoriesno</span></a>
+            <a href="{{ url_for('viewrecipe') }}" class="list-group-item list-group-item-action list-group-item-success">Recipes : <span>user.recipesno</span></a>
             <hr>
             <a href="{{ url_for('index') }}" class="list-group-item list-group-item-action list-group-item-warning">Logout</a>
           </div>
@@ -46,15 +46,15 @@
           <div class="yummy-card">
             <h3 class="yummy-heading">Add New Category</h3>
             <hr>
-            <form class="yummy-form" action="" method="post" name="addcategory">
+            <form class="yummy-form" action="/addcategory" method="post" name="addcategory">
                 <legend>Add New Category</legend>
                 <fieldset class="form-group">
-                        <label for="categoryname"><i class="fa fa-bolt" aria-hidden="true"></i> Category name</label>
-                        <input type="text" name="categoryname" id="categoryname" class="form-control" placeholder="Category name" required>
+                        <label for="categorytitle"><i class="fa fa-bolt" aria-hidden="true"></i> Category title</label>
+                        {{ form.categorytitle(class="form-control", placeholder="Category title")}}
                 </fieldset>
                 <fieldset class="form-group">
                         <label for="categorydescription"><i class="fa fa-bolt" aria-hidden="true"></i> Category description</label>
-                        <textarea name="categorydescription" id="categorydescription" class="form-control" placeholder="Category description" required></textarea>
+                        {{ form.categorydescription(class="form-control", placeholder="categorydescription")}}
                 </fieldset>
                 <button type="submit" class="btn btn-success btn-block"><i class="fa fa-2x fa-plus" aria-hidden="true"></i> Add New Category</button>
             </form>
