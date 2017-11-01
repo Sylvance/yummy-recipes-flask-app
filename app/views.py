@@ -181,6 +181,34 @@ def editrecipe(categoryid, recipeid):
                            title='editrecipe',
                            user=currentuser)
 
+
+@APP.route('/viewcategory')
+@login_required
+def viewcategory():
+    """ You can view the list of categories """
+    currentuser = provide_user()
+    for user in users:
+        if user.email == session['logged_in']:
+            categories = user.categories
+    return render_template('viewcategory.html',
+                           title='viewcategory',
+                           categories = categories,
+                           user=currentuser)
+
+
+@APP.route('/viewrecipe')
+@login_required
+def viewrecipe():
+    """ You can see a list of recipes """
+    currentuser = provide_user()
+    for user in users:
+        if user.email == session['logged_in']:
+            categories = user.categories
+    return render_template('viewrecipe.html',
+                           title='viewrecipe',
+                           categories = categories,
+                           user=currentuser)
+
 @APP.route('/profile', methods=['GET'])
 @login_required
 def profile():
@@ -234,34 +262,6 @@ def signup():
     return render_template('signup.html',
                            title='signup',
                            form=form)
-
-
-@APP.route('/viewcategory')
-@login_required
-def viewcategory():
-    """ You can view the list of categories """
-    currentuser = provide_user()
-    for user in users:
-        if user.email == session['logged_in']:
-            categories = user.categories
-    return render_template('viewcategory.html',
-                           title='viewcategory',
-                           categories = categories,
-                           user=currentuser)
-
-
-@APP.route('/viewrecipe')
-@login_required
-def viewrecipe():
-    """ You can see a list of recipes """
-    currentuser = provide_user()
-    for user in users:
-        if user.email == session['logged_in']:
-            categories = user.categories
-    return render_template('viewrecipe.html',
-                           title='viewrecipe',
-                           categories = categories,
-                           user=currentuser)
 
 
 @APP.route('/logout')
