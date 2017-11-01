@@ -3,29 +3,37 @@
     <div class="container">
         <div class="row">
           <div class="col-md-6 offset-md-3">
-            <form class="yummy-form" action="" method="post" name="signin">
+            <form class="yummy-form" action="/signin" method="post" name="signin">
                 <h3>Yummy Recipes</h3>
                 <legend>Sign In</legend>
                 <p>Have no account? <a href="{{ url_for('signup') }}">Sign up</a>.</p>
+                {% macro render_field(field) %} 
+                    <dt>{{ field.label }}
+                    <dd>{{ field(**kwargs)|safe }} {% if field.errors %}
+                        <ul class=errors>
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li> 
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                    </dd>
+                {% endmacro %}
+                {% for message in get_flashed_messages() %}
+                    {% if error %}
+                        <div class="flash">{{ message }}</div>
+                    {% else %}
+                        <div class="flash-success">{{ message }}</div>
+                    {% endif %}
+                {% endfor %} 
                 <fieldset class="form-group">
-                        <label for="username"><i class="fa fa-user" aria-hidden="true"></i> Username</label>
-                        <input type="text" name="username" id="username" class="form-control" placeholder="Username" required>
+                    <label for="email"><i class="fa fa-inbox" aria-hidden="true"></i> Email</label>
+                    {{ form.email(class="form-control", placeholder="Email")}}
                 </fieldset>
                 <fieldset class="form-group">
-                        <label for="password"><i class="fa fa-lock" aria-hidden="true"></i> Password</label>
-                        <input type="text" name="password" id="password" class="form-control" placeholder="Password" required>
+                    <label for="password"><i class="fa fa-lock" aria-hidden="true"></i> Password</label>
+                    {{ form.password(class="form-control", placeholder="Password")}}
                 </fieldset>
                 <button type="submit" class="btn btn-success btn-block"><i class="fa fa-2x fa-unlock" aria-hidden="true"></i> Sign In</button>
-                <blockquote>
-                    <h3>Username and Password</h3>
-                    <p>Username : User1</p>
-                    <p>Password : password</p>
-                    <p>From DATABASE = [
-                        ("User1", "password"),
-                        ("User2", "password")
-                    ]</p>
-
-                </blockquote>
             </form>
           </div>
         </div>

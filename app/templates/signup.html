@@ -3,25 +3,41 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        <form class="yummy-form" action="" method="post" name="signup">
+        <form class="yummy-form" action="/signup" method="post" name="signup">
             <h3>Yummy Recipes</h3>
             <legend>Sign Up</legend>
             <p>Already signed up? <a href="{{ url_for('signin') }}">Sign in</a>.</p>
+            {% macro render_field(field) %} 
+                <dt>{{ field.label }}
+                <dd>{{ field(**kwargs)|safe }} {% if field.errors %}
+                    <ul class=errors>
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li> 
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                </dd>
+            {% endmacro %}
+            
             <fieldset class="form-group">
-                    <label for="username"><i class="fa fa-user" aria-hidden="true"></i> Username</label>
-                    <input type="text" name="username" id="username" class="form-control" placeholder="Username" required>
+                <label for="username"><i class="fa fa-user" aria-hidden="true"></i> Username</label>
+                {{ form.username(class="form-control", placeholder="Username")}}
             </fieldset>
             <fieldset class="form-group">
-                    <label for="email"><i class="fa fa-inbox" aria-hidden="true"></i> Email</label>
-                    <input type="text" name="email" id="email" class="form-control" placeholder="Email" required>
+                <label for="email"><i class="fa fa-inbox" aria-hidden="true"></i> Email</label>
+                {{ form.email(class="form-control", placeholder="Email")}}
             </fieldset>
             <fieldset class="form-group">
-                    <label for="password"><i class="fa fa-lock" aria-hidden="true"></i> Password</label>
-                    <input type="text" name="password" id="password" class="form-control" placeholder="Password" required>
+                <label for="bio"><i class="fa fa-book" aria-hidden="true"></i> Bio</label>
+                {{ form.bio(class="form-control", placeholder="Bio")}}
             </fieldset>
             <fieldset class="form-group">
-                    <label for="password_confirm"><i class="fa fa-lock" aria-hidden="true"></i> Password Confirm</label>
-                    <input type="text" name="password_confirm" id="password_confirm" class="form-control" placeholder="Password Confirm" required>
+                <label for="password"><i class="fa fa-lock" aria-hidden="true"></i> Password</label>
+                {{ form.password(class="form-control", placeholder="Password")}}
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="password_confirm"><i class="fa fa-lock" aria-hidden="true"></i> Password Confirm</label>
+                {{ form.password_confirm(class="form-control", placeholder="Confirm password")}}
             </fieldset>
             <button type="submit" class="btn btn-success btn-block"><i class="fa fa-2x fa-unlock" aria-hidden="true"></i> Sign Up</button>
         </form>
