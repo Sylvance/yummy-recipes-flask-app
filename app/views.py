@@ -1,27 +1,29 @@
 """ Views file for the Flask APP"""
-from flask import render_template, session, redirect, url_for, request
+from flask import render_template, session, redirect, url_for, flash, request
 from wtforms import Form, StringField, PasswordField, TextField, validators
-from functools import  wraps
+from functools import wraps
 from app import APP
-from .models.user import User
+from .models.users import User
 
 users = []
 
+
 class RegisterForm(Form):
     """ create form input fields for register"""
-    username = StringField('username', 
-                            [validators.Length(min=1, max=50)])
+    username = StringField('username',
+                           [validators.Length(min=1, max=50)])
     email = TextField('email',
-                         [validators.DataRequired(),
+                      [validators.DataRequired(),
                           validators.Email()])
     bio = TextField('bio',
-                         [validators.Length(min=1, max=255)])
+                    [validators.Length(min=1, max=255)])
     password = PasswordField('password', [
         validators.DataRequired(),
-         validators.EqualTo('confirm',
+        validators.EqualTo('password_confirm',
                              message='password do not match'),
-                              validators.Length(min=6, max=25)])
-    confirm = PasswordField('confirm password')
+        validators.Length(min=6, max=25)])
+    password_confirm = PasswordField('password_confirm')
+
 
 class LoginForm(Form):
     """create from input field for login"""
@@ -29,27 +31,33 @@ class LoginForm(Form):
         validators.DataRequired(), validators.Email()])
     password = PasswordField('password',
                              [validators.DataRequired()
-                            ])
+                              ])
+
 
 class CreateCategory(Form):
     """create form input for category"""
     categorytitle = StringField('categorytitle', [validators.DataRequired()])
     categorydescription = StringField('categorydescription')
 
+
 class EditCategory(Form):
     """create form input fields for edit"""
-    categorytitle = StringField('newtitle' , [validators.DataRequired()])
-    categorydescription = StringField('newdescription', [validators.DataRequired()])
+    categorytitle = StringField('newtitle', [validators.DataRequired()])
+    categorydescription = StringField(
+        'newdescription', [validators.DataRequired()])
+
 
 class CreateRecipe(Form):
     """creates form input field for adding recipe"""
     recipetitle = StringField('recipetitle', [validators.DataRequired()])
     recipedescription = StringField('recipedescription')
 
+
 class EditRecipe(Form):
     """creates form input field for editing recipe"""
-    recipetitle = StringField('newtitle' , [validators.DataRequired()])
-    recipedescription = StringField('newdescription', [validators.DataRequired()])
+    recipetitle = StringField('newtitle', [validators.DataRequired()])
+    recipedescription = StringField(
+        'newdescription', [validators.DataRequired()])
 
 
 def login_required(f):
@@ -59,8 +67,9 @@ def login_required(f):
             return f(*args, **kwargs)
         else:
             flash('Please login in first')
-            return redirect(url_for('login', next=request.url))
+            return redirect(url_for('signin', next=request.url))
     return decorated_function
+
 
 @APP.route('/')
 @APP.route('/index')
@@ -105,14 +114,21 @@ def editrecipe():
                            title='editrecipe')
 
 
-@APP.route('/profile')
+@APP.route('/profile', methods=['GET'])
+@login_required
 def profile():
     """ Here the use r can view his/her profile """
-    return render_template('profile.html',
-                           title='profile')
+    for user in users:
+        if user.email == session['logged_in']:
+            currentuser = user
+            return render_template('profile.html',
+                           title='profile',
+                           user = currentuser)
+    return redirect(url_for('signin'))
 
 
-@APP.route('/recipe')
+@APP.route('/recipe', methods=['GET'])
+@login_required
 def recipe():
     """ This is where you view the recipe"""
     return render_template('recipe.html',
@@ -122,24 +138,27 @@ def recipe():
 @APP.route('/signin', methods=['GET', 'POST'])
 def signin():
     """ This is the page where you sign in """
-    if request.method == 'POST':
-
-        session['username'] = request.form['username']
-        username = request.form['username']
-        password = request.form['password']
-        if (username, password) in DATABASE:
-            return redirect('/profile')
-        return redirect('/signin')
-
+    form = LoginForm(request.form)
+    error = None
+    if request.method == 'POST' and form.validate():
+        for user in users:
+            if user.email == form.email.data and\
+                    user.password == form.password.data:
+                session['logged_in'] = user.email
+                return redirect('/profile')
+            else:
+                flash("Invalid credentials")
     return render_template('signin.html',
-                           title='signin')
+                           title='signin',
+                           form=form)
+
 
 @APP.route('/signup', methods=['GET', 'POST'])
 def signup():
     """ This is a form that takes sign up details """
     form = RegisterForm(request.form)
     if request.method == "POST" and form.validate():
-        user = User(form.username.data, 
+        user = User(form.username.data,
                     form.email.data,
                     form.bio.data,
                     form.password.data
