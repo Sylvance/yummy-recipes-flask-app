@@ -50,7 +50,7 @@ class EditCategory(Form):
 class CreateRecipe(Form):
     """creates form input field for adding recipe"""
     recipetitle = StringField('recipetitle', [validators.DataRequired()])
-    recipedescription = StringField('recipedescription')
+    recipedescription = TextAreaField('recipedescription')
 
 
 class EditRecipe(Form):
@@ -97,26 +97,38 @@ def addcategory():
                 user.create_category(form.categorytitle.data,
                                      form.categorydescription.data
                                      )
-                return redirect('/category')
+                return redirect('/viewcategory')
             else:
-                flash("Your email or password is wrong")
+                flash("You should login first")
     return render_template('addcategory.html',
                            title='addcategory',
                            form=form,
                            user=currentuser)
 
 
-@APP.route('/addrecipe', methods=['GET', 'POST'])
+@APP.route('/addrecipe/<id>', methods=['GET', 'POST'])
 @login_required
 def addrecipe():
     """ A form that adds a new recipe """
+    form = CreateRecipe(request.form)
     currentuser = provide_user()
+    error = None
+    if request.method == 'POST' and form.validate():
+        for user in users:
+            if user.email == session['logged_in']:
+                currentuser = user
+                for category in user.categories.values():
+                    if id == category.id:
+                        category.add_recipe(form.recipetitle.data, form.recipedescription.data)
+                        return redirect('/viewrecipe')
+            else:
+                flash("You should login first")
     return render_template('addrecipe.html',
                            title='addrecipe',
                            user=currentuser)
 
 
-@APP.route('/category')
+@APP.route('/category/<id>', methods=['GET', 'POST'])
 @login_required
 def category():
     """ This is a view page for the category """
