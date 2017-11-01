@@ -185,14 +185,21 @@ def editrecipe(categoryid, recipeid):
 @login_required
 def deletecategory(id):
     """ A form that edits the category """
-    currentuser = provide_user()
-    error = None
-    if request.method == 'POST' and form.validate():
-        for user in users:
-            if user.email == session['logged_in']:
-                currentuser = user
-                user.delete_category(id)
-                return redirect('/viewcategory')
+    for user in users:
+        if user.email == session['logged_in']:
+            currentuser = user
+            user.delete_category(id)
+            return redirect('/viewcategory')
+
+@APP.route('/deleterecipe/<categoryid>/<recipeid>', methods=['GET', 'POST'])
+@login_required
+def deleterecipe(categoryid, recipeid):
+    """ Here you can edit the details of the recipe """
+    for user in users:
+        if user.email == session['logged_in']:
+            currentuser = user
+            user.categories[categoryid].delete_recipe(recipeid)
+            return redirect('/deleterecipe')
 
 
 @APP.route('/viewcategory')
