@@ -53,7 +53,7 @@
             {% if categories %}
               {% for category in categories.values() %}
               {% set id = category.id %}
-                <p class="yummy-category"><a href="{{ url_for('category', id=id) }}">{{ category.categorytitle}}</a><span><a href="#" style="color: #9e1f37;" data-toggle="modal" data-target="#dc{{ url_for('category', id=id) }}">X</a></span></p>
+                <p class="yummy-category"><a href="{{ url_for('category', categoryid=id) }}">{{ category.categorytitle}}</a><span><a href="#" style="color: #9e1f37;" data-toggle="modal" data-target="#dc{{ id }}">X</a></span></p>
               {% endfor %}
             {% endif %}
             <a href="{{ url_for('addcategory') }}" style="margin-left: 15px; color: green;"><i class="fa fa-plus" aria-hidden="true"></i> Add new category</a>
@@ -64,7 +64,7 @@
               {% set id = category.id %}
                 {% for recipe in categories[id].recipes.values() %}
                 {% set rid = recipe.id %}
-                  <p class="yummy-recipe"><a href="{{ url_for('recipe', id=rid) }}">{{ recipe.recipetitle}} </a><span><a href="#" style="color: #9e1f37;" data-toggle="modal" data-target="#dr{{ url_for('deleterecipe', id=rid) }}">X</a></span></p>
+                  <p class="yummy-recipe"><a href="{{ url_for('recipe', categoryid=id, recipeid=rid) }}">{{ recipe.recipetitle}} </a><span><a href="#" style="color: #9e1f37;" data-toggle="modal" data-target="#dr{{ rid }}">X</a></span></p>
                 {% endfor %}
               {% endfor %}
             {% endif %}
@@ -74,7 +74,7 @@
           {% if categories %}
             {% for category in categories.values() %}
             {% set id = category.id %}
-              <div class="modal fade" id="dc{{ url_for('category', id=id) }}" tabindex="-1" role="dialog" aria-labelledby="modalLabelSmall" aria-hidden="true">
+              <div class="modal fade" id="dc{{ id }}" tabindex="-1" role="dialog" aria-labelledby="modalLabelSmall" aria-hidden="true">
                 <div class="modal-dialog modal-sm">
                   <div class="modal-content">
 
@@ -101,7 +101,7 @@
               {% for recipe in categories[id].recipes.values() %}
               {% set rid = recipe.id %}
                 <!-- The recipe modal -->
-                <div class="modal fade" id="drdr{{ url_for('recipe', id=rid) }}" tabindex="-1" role="dialog" aria-labelledby="modalLabelSmall" aria-hidden="true">
+                <div class="modal fade" id="dr{{ rid }}" tabindex="-1" role="dialog" aria-labelledby="modalLabelSmall" aria-hidden="true">
                   <div class="modal-dialog modal-sm">
                     <div class="modal-content">
 

@@ -1,6 +1,6 @@
 """ Views file for the Flask APP"""
 from flask import render_template, session, redirect, url_for, flash, request
-from wtforms import Form, StringField, PasswordField, TextField, TextAreaField, validators
+from wtforms import Form, StringField, SelectField, PasswordField, TextField, TextAreaField, validators
 from functools import wraps
 from app import APP
 from .models.users import User
@@ -50,6 +50,7 @@ class EditCategory(Form):
 class CreateRecipe(Form):
     """creates form input field for adding recipe"""
     recipetitle = StringField('recipetitle', [validators.DataRequired()])
+    recipecategory = SelectField('recipecategory', [validators.DataRequired()])
     recipedescription = TextAreaField('recipedescription')
 
 
@@ -118,7 +119,6 @@ def addrecipe():
     if request.method == 'POST' and form.validate():
         for user in users:
             if user.email == session['logged_in']:
-                currentuser = user
                 for category in user.categories.values():
                     if id == category.id:
                         category.add_recipe(
@@ -126,24 +126,30 @@ def addrecipe():
                         return redirect('/viewrecipe')
             else:
                 flash("You should login first")
-    return render_template('addrecipe.html',
-                           title='addrecipe',
-                           form=form,
-                           user=currentuser)
+                redirect('/signin')
+    else:
+        for user in users:
+            if user.email == session['logged_in']:
+                categories = user.categories
+                return render_template('addrecipe.html',
+                                       title='addrecipe',
+                                       form=form,
+                                       user=currentuser)
 
 
 @APP.route('/category/<categoryid>', methods=['GET'])
 @login_required
 def category(categoryid):
     """ This is a view page for the category """
-    currentuser = session['logged_in']
+    currentuser = provide_user()
     for user in users:
         if user.email == session['logged_in']:
             category = user.categories[categoryid]
-    return render_template('category.html',
-                           title='category',
-                           category=category,
-                           user=currentuser)
+            return render_template('category.html',
+                                   title='category',
+                                   category=category,
+                                   user=currentuser)
+
 
 @APP.route('/editcategory/<id>', methods=['GET', 'POST'])
 @login_required
@@ -155,14 +161,16 @@ def editcategory(id):
     if request.method == 'POST' and form.validate():
         for user in users:
             if user.email == session['logged_in']:
-                currentuser = user
                 user.update_category(id,
                                      form.categorytitle.data,
                                      form.categorydescription.data)
                 return redirect('/viewcategory')
     return render_template('editcategory.html',
                            title='editcategory',
+                           categoryid = id,
+                           form=form,
                            user=currentuser)
+
 
 @APP.route('/editrecipe/<categoryid>/<recipeid>', methods=['GET', 'POST'])
 @login_required
@@ -183,6 +191,7 @@ def editrecipe(categoryid, recipeid):
                            title='editrecipe',
                            user=currentuser)
 
+
 @APP.route('/viewcategory')
 @login_required
 def viewcategory():
@@ -191,10 +200,11 @@ def viewcategory():
     for user in users:
         if user.email == session['logged_in']:
             categories = user.categories
-    return render_template('viewcategory.html',
-                           title='viewcategory',
-                           categories = categories,
-                           user=currentuser)
+            return render_template('viewcategory.html',
+                                   title='viewcategory',
+                                   categories=categories,
+                                   user=currentuser)
+
 
 @APP.route('/viewrecipe')
 @login_required
@@ -206,8 +216,9 @@ def viewrecipe():
             categories = user.categories
     return render_template('viewrecipe.html',
                            title='viewrecipe',
-                           categories = categories,
+                           categories=categories,
                            user=currentuser)
+
 
 @APP.route('/deletecategory/<id>', methods=['GET'])
 @login_required
@@ -218,6 +229,7 @@ def deletecategory(id):
             user.delete_category(id)
             return redirect('/viewcategory')
 
+
 @APP.route('/deleterecipe/<categoryid>/<recipeid>', methods=['GET'])
 @login_required
 def deleterecipe(categoryid, recipeid):
@@ -227,6 +239,7 @@ def deleterecipe(categoryid, recipeid):
             user.categories[categoryid].delete_recipe(recipeid)
             return redirect('/viewrecipe')
 
+
 @APP.route('/profile', methods=['GET'])
 @login_required
 def profile():
@@ -235,10 +248,11 @@ def profile():
     for user in users:
         if user.email == session['logged_in']:
             categories = user.categories
-    return render_template('profile.html',
-                           title='profile',
-                           categories=categories,
-                           user=currentuser)
+            return render_template('profile.html',
+                                   title='profile',
+                                   categories=categories,
+                                   user=currentuser)
+    return redirect('/index')
 
 
 @APP.route('/recipe/<categoryid>/<recipeid>', methods=['GET'])
@@ -251,7 +265,7 @@ def recipe(categoryid, recipeid):
             recipe = user.categories[categoryid][recipeid]
     return render_template('recipe.html',
                            title='recipe',
-                           recipe = recipe,
+                           recipe=recipe,
                            user=currentuser)
 
 

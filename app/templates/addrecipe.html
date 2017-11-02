@@ -56,6 +56,18 @@
                         <label for="recipedescription"><i class="fa fa-bolt" aria-hidden="true"></i> Recipe description</label>
                         {{ form.recipedescription(class="form-control", placeholder="Recipe description")}}
                 </fieldset>
+                <fieldset class="form-group">
+                    <label for="recipecategory"><i class="fa fa-bolt" aria-hidden="true"></i> Recipe category</label>
+                    <select name="recipecategory" id="recipecategory" class="form-control custom-select" required>
+                        <option selected>Choose Category...</option>
+                        {% if categories %}
+                          {% for category in categories.values() %}
+                          {% set id = category.id %}
+                            <option value="{{ id }}">{{ category.categorytitle }}</option>
+                          {% endfor %}
+                        {% endif %}
+                    </select>
+                </fieldset>
                 <button type="submit" class="btn btn-success btn-block"><i class="fa fa-2x fa-plus" aria-hidden="true"></i> Add New Recipe</button>
             </form>
             <hr>
