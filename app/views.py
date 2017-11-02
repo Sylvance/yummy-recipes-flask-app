@@ -298,7 +298,8 @@ def signup():
                     form.password.data
                     )
         users.append(user)
-        return redirect('/profile')
+        flash('Thanks for registering')
+        return redirect(url_for('profile'))
     return render_template('signup.html',
                            title='signup',
                            form=form)

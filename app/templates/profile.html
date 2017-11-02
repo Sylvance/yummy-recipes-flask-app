@@ -31,14 +31,14 @@
         <div class="yummy-card">
           <img class="yummy-image img-thumbnail" src="{{url_for('static', filename='images/background.jpg') }}" alt="Profile Image">
           <span class="yummy-username">@{{ user.username }}</span>
-          <span class="yummy-job">{{ user.jbio }}</span>
+          <span class="yummy-job">{{ user.bio }}</span>
           <div class="list-group">
             <hr>
             <a href="{{ url_for('profile') }}" class="list-group-item list-group-item-action">Profile</a>
             <a href="{{ url_for('viewcategory') }}" class="list-group-item list-group-item-action list-group-item-info">Categories : <span>{{ user.categoriesno }}</span></a>
             <a href="{{ url_for('viewrecipe') }}" class="list-group-item list-group-item-action list-group-item-success">Recipes : <span>{{ user.recipesno }}</span></a>
             <hr>
-            <a href="{{ url_for('index') }}" class="list-group-item list-group-item-action list-group-item-warning">Logout</a>
+            <a href="{{ url_for('logout') }}" class="list-group-item list-group-item-action list-group-item-warning">Logout</a>
           </div>
         </div>
       </div>
@@ -47,7 +47,7 @@
             <h3 class="yummy-heading">My Profile</h3>
             <hr>
             <h5 class="yummy-head">Bio</h5>
-            <p class="yummy-info">This is where your bio is supposed to be. A short sentence describing yourself.</p>
+            <p class="yummy-info">{{ user.bio }}</p>
             <hr>
             <h5 class="yummy-head">My Categories</h5>
             {% if categories %}
