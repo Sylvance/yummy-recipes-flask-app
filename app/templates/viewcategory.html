@@ -73,6 +73,12 @@
                 </div>
               {% endif %}
             {% endwith %}
+            {% if categories %}
+              {% for category in categories.values() %}
+              {% set id = category.id %}
+                <p class="yummy-category"><a href="{{ url_for('category', categoryid=id) }}">{{ category.categorytitle}}</a><span><a href="#" style="color: #9e1f37;" data-toggle="modal" data-target="#dc{{ id }}">X</a></span></p>
+              {% endfor %}
+            {% endif %}
             <hr>
             <a href="{{ url_for('addcategory') }}" style="color: green;"><i class="fa fa-plus" aria-hidden="true"></i> Add new category</a>
             <hr>
