@@ -2,6 +2,7 @@
 
 from .category import Category
 
+
 class User(object):
     """ User class"""
 
@@ -27,10 +28,9 @@ class User(object):
                 self.categories[key].categorytitle = categorytitle
                 self.categories[key].categorydescription = categorydescription
 
-
     def delete_category(self, id):
         """ Delete category """
-        for key  in self.categories.copy().keys():
+        for key in self.categories.copy().keys():
             if id == key:
                 del self.categories[key]
 

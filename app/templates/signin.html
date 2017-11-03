@@ -6,32 +6,37 @@
             <form class="yummy-form" action="/signin" method="post" name="signin">
                 <h3>Yummy Recipes</h3>
                 <legend>Sign In</legend>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    <ul class="yummy-flash" style="padding: 1.5em; background-color: lightyellow; border-radius: 5px; box-shadow: 1px 2px #eeeccc; ">
+                    {% for category, message in messages %}
+                      <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                  {% endif %}
+                {% endwith %}
                 <p>Have no account? <a href="{{ url_for('signup') }}">Sign up</a>.</p>
-                {% macro render_field(field) %} 
-                    <dt>{{ field.label }}
-                    <dd>{{ field(**kwargs)|safe }} {% if field.errors %}
-                        <ul class=errors>
-                        {% for error in field.errors %}
-                            <li>{{ error }}</li> 
-                        {% endfor %}
-                        </ul>
-                    {% endif %}
-                    </dd>
-                {% endmacro %}
-                {% for message in get_flashed_messages() %}
-                    {% if error %}
-                        <div class="flash">{{ message }}</div>
-                    {% else %}
-                        <div class="flash-success">{{ message }}</div>
-                    {% endif %}
-                {% endfor %} 
                 <fieldset class="form-group">
                     <label for="email"><i class="fa fa-inbox" aria-hidden="true"></i> Email</label>
                     {{ form.email(class="form-control", placeholder="Email")}}
+                    {% if form.email.errors %}
+                        <ul class=errors style="color: red; font: Verdana;">
+                        {% for error in form.email.errors %}
+                          <li>{{ error }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
                 </fieldset>
                 <fieldset class="form-group">
                     <label for="password"><i class="fa fa-lock" aria-hidden="true"></i> Password</label>
                     {{ form.password(class="form-control", placeholder="Password")}}
+                    {% if form.password.errors %}
+                        <ul class=errors style="color: red; font: Verdana;">
+                        {% for error in form.password.errors %}
+                          <li>{{ error }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
                 </fieldset>
                 <button type="submit" class="btn btn-success btn-block"><i class="fa fa-2x fa-unlock" aria-hidden="true"></i> Sign In</button>
             </form>

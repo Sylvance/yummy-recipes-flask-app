@@ -6,38 +6,61 @@
         <form class="yummy-form" action="/signup" method="post" name="signup">
             <h3>Yummy Recipes</h3>
             <legend>Sign Up</legend>
-            <p>Already signed up? <a href="{{ url_for('signin') }}">Sign in</a>.</p>
-            {% macro render_field(field) %} 
-                <dt>{{ field.label }}
-                <dd>{{ field(**kwargs)|safe }} {% if field.errors %}
-                    <ul class=errors>
-                    {% for error in field.errors %}
-                        <li>{{ error }}</li> 
-                    {% endfor %}
-                    </ul>
-                {% endif %}
-                </dd>
-            {% endmacro %}
-            
+            <p>Already signed up? <a href="{{ url_for('signin') }}">Sign in</a>.</p>            
             <fieldset class="form-group">
                 <label for="username"><i class="fa fa-user" aria-hidden="true"></i> Username</label>
                 {{ form.username(class="form-control", placeholder="Username")}}
+                {% if form.username.errors %}
+                    <ul class=errors style="color: red; font: Verdana;">
+                    {% for error in form.username.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
             </fieldset>
             <fieldset class="form-group">
                 <label for="email"><i class="fa fa-inbox" aria-hidden="true"></i> Email</label>
                 {{ form.email(class="form-control", placeholder="Email")}}
+                {% if form.email.errors %}
+                    <ul class=errors style="color: red; font: Verdana;">
+                    {% for error in form.email.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
             </fieldset>
             <fieldset class="form-group">
                 <label for="bio"><i class="fa fa-book" aria-hidden="true"></i> Bio</label>
                 {{ form.bio(class="form-control", placeholder="Bio")}}
+                {% if form.bio.errors %}
+                    <ul class=errors style="color: red; font: Verdana;">
+                    {% for error in form.bio.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
             </fieldset>
             <fieldset class="form-group">
                 <label for="password"><i class="fa fa-lock" aria-hidden="true"></i> Password</label>
                 {{ form.password(class="form-control", placeholder="Password")}}
+                {% if form.password.errors %}
+                    <ul class=errors style="color: red; font: Verdana;">
+                    {% for error in form.password.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
             </fieldset>
             <fieldset class="form-group">
                 <label for="password_confirm"><i class="fa fa-lock" aria-hidden="true"></i> Password Confirm</label>
                 {{ form.password_confirm(class="form-control", placeholder="Confirm password")}}
+                {% if form.password_confirm.errors %}
+                    <ul class=errors style="color: red; font: Verdana;">
+                    {% for error in form.password_confirm.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
             </fieldset>
             <button type="submit" class="btn btn-success btn-block"><i class="fa fa-2x fa-unlock" aria-hidden="true"></i> Sign Up</button>
         </form>

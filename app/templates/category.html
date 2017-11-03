@@ -21,7 +21,7 @@
             <a class="nav-link" href="{{ url_for('viewrecipe') }}">Recipes</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('index') }}">Logout</a>
+            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
             </li>
           </ul>
         </div>                   
@@ -30,34 +30,38 @@
       <div class="col-md-3 d-none d-md-block">
         <div class="yummy-card">
           <img class="yummy-image img-thumbnail" src="{{url_for('static', filename='images/background.jpg') }}" alt="Profile Image">
-          <span class="yummy-username">@{{ user.nickname }}</span>
-          <span class="yummy-job">{{ user.job }}</span>
+          <span class="yummy-username">@{{ user.username }}</span>
+          <span class="yummy-job">{{ user.bio }}</span>
           <div class="list-group">
             <hr>
             <a href="{{ url_for('profile') }}" class="list-group-item list-group-item-action">Profile</a>
-            <a href="{{ url_for('viewcategory') }}" class="list-group-item list-group-item-action list-group-item-info">Categories : <span>{{ user.categoriesno }}</span></a>
-            <a href="{{ url_for('viewrecipe') }}" class="list-group-item list-group-item-action list-group-item-success">Recipes : <span>{{ user.recipesno }}</span></a>
+            <a href="{{ url_for('viewcategory') }}" class="list-group-item list-group-item-action list-group-item-info">Categories</a>
+            <a href="{{ url_for('viewrecipe') }}" class="list-group-item list-group-item-action list-group-item-success">Recipes</a>
             <hr>
-            <a href="{{ url_for('index') }}" class="list-group-item list-group-item-action list-group-item-warning">Logout</a>
+            <a href="{{ url_for('logout') }}" class="list-group-item list-group-item-action list-group-item-warning">Logout</a>
           </div>
         </div>
       </div>
       <div class="col-md-7 offset-md-1">
           <div class="yummy-card">
-            <h3 class="yummy-heading">Indian Cuisine</h3>
-            <hr>
-            <h5 class="yummy-head">Recipes</h5>
-            <p class="yummy-recipe"><a href="{{ url_for('recipe') }}">Collard Greens with African White cake </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
-            <p class="yummy-recipe"><a href="{{ url_for('recipe') }}">Yellowed Rice with Black Beans </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
-            <p class="yummy-recipe"><a href="{{ url_for('recipe') }}">Chapati with Aurona stew </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
-            <p class="yummy-recipe"><a href="{{ url_for('recipe') }}">Spicy bean stew with Cassava </a><span><a href="#" style="color: #9e1f37;">X</a></span></p>
+            <h3 class="yummy-heading">{{ category.categorytitle}}</h3>
             <hr>
             <h5 class="yummy-head">Description</h5>
-            <p class="yummy-description">This is the description for how the category.</p>
+            <p class="yummy-description">{{ category.categorydescription}}</p>
             <hr>
-            <a href="#" style="color:crimson;" data-toggle="modal" data-target="#deleteCategory"><i class="fa fa-minus" aria-hidden="true"></i> Delete category</a>
+            <h5 class="yummy-head">Recipes</h5>
+            {% if recipes %}
+              {% for recipe in recipes.values() %}
+              {% set rid = recipe.id %}
+                <p class="yummy-recipe"><a href="{{ url_for('recipe', categoryid=category.id, recipeid=rid) }}">{{ recipe.recipetitle}} </a><span><a href="#" style="color: #9e1f37;" data-toggle="modal" data-target="#dr{{ rid }}">X</a></span></p>
+              {% endfor %}
+            {% endif %}
+            <a href="{{ url_for('addrecipe', categoryid=category.id) }}" style="margin-left: 15px; color: green;"><i class="fa fa-plus" aria-hidden="true"></i> Add new recipe</a>
+            <hr>
+            <a href="{{ url_for('editcategory', id=category.id) }}" style="color:green;"><i class="fa fa-edit" aria-hidden="true"></i> Edit category</a>
+            <a href="#" style="color:crimson;" data-toggle="modal" data-target="#dc{{ category.id }}"><i class="fa fa-minus" aria-hidden="true"></i>  Delete category</a>
             <!-- The modal -->
-            <div class="modal fade" id="deleteCategory" tabindex="-1" role="dialog" aria-labelledby="modalLabelSmall" aria-hidden="true">
+            <div class="modal fade" id="dc{{ category.id }}" tabindex="-1" role="dialog" aria-labelledby="modalLabelSmall" aria-hidden="true">
               <div class="modal-dialog modal-sm">
                 <div class="modal-content">
 
@@ -70,12 +74,37 @@
 
                   <div class="modal-body">
                     <p>Are you sure you want to delete this category?</p>
-                    <a href="#" class="btn btn-lg btn-block btn-danger"><i class="fa fa-minus" aria-hidden="true"></i> Delete category</a>
+                    <a href="{{ url_for('deletecategory', id=category.id)}}" class="btn btn-lg btn-block btn-danger"><i class="fa fa-minus" aria-hidden="true"></i> Delete category</a>
                   </div>
 
                 </div>
               </div>
             </div>
+            {% if recipes %}
+              {% for recipe in recipes.values() %}
+              {% set rid = recipe.id %}
+                <!-- The recipe modal -->
+                <div class="modal fade" id="dr{{ rid }}" tabindex="-1" role="dialog" aria-labelledby="modalLabelSmall" aria-hidden="true">
+                  <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="modalLabelSmall">Delete recipe</h4>
+                      </div>
+
+                      <div class="modal-body">
+                        <p>Are you sure you want to delete this recipe?</p>
+                        <a href="{{ url_for('deleterecipe', categoryid=category.id, recipeid=recipe.id) }}" class="btn btn-lg btn-block btn-danger"><i class="fa fa-minus" aria-hidden="true"></i> Delete recipe</a>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            {% endif %}
             <hr>
             <a href="{{ url_for('profile') }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
           </div>

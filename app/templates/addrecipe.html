@@ -21,7 +21,7 @@
             <a class="nav-link" href="{{ url_for('viewrecipe') }}">Recipes</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('index') }}">Logout</a>
+            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
             </li>
           </ul>
         </div>                   
@@ -30,15 +30,15 @@
       <div class="col-md-3 d-none d-md-block">
         <div class="yummy-card">
           <img class="yummy-image img-thumbnail" src="{{url_for('static', filename='images/background.jpg') }}" alt="Profile Image">
-          <span class="yummy-username">@{{ user.nickname }}</span>
-          <span class="yummy-job">{{ user.job }}</span>
+          <span class="yummy-username">@{{ user.username }}</span>
+          <span class="yummy-job">{{ user.bio }}</span>
           <div class="list-group">
             <hr>
             <a href="{{ url_for('profile') }}" class="list-group-item list-group-item-action">Profile</a>
-            <a href="{{ url_for('viewcategory') }}" class="list-group-item list-group-item-action list-group-item-info">Categories : <span>{{ user.categoriesno }}</span></a>
-            <a href="{{ url_for('viewrecipe') }}" class="list-group-item list-group-item-action list-group-item-success">Recipes : <span>{{ user.recipesno }}</span></a>
+            <a href="{{ url_for('viewcategory') }}" class="list-group-item list-group-item-action list-group-item-info">Categories</a>
+            <a href="{{ url_for('viewrecipe') }}" class="list-group-item list-group-item-action list-group-item-success">Recipes</a>
             <hr>
-            <a href="{{ url_for('index') }}" class="list-group-item list-group-item-action list-group-item-warning">Logout</a>
+            <a href="{{ url_for('logout') }}" class="list-group-item list-group-item-action list-group-item-warning">Logout</a>
           </div>
         </div>
       </div>
@@ -46,34 +46,29 @@
           <div class="yummy-card">
             <h3 class="yummy-heading">Add New Recipe</h3>
             <hr>
-            <form class="yummy-form" action="" method="post" name="addrecipe">
+            <form class="yummy-form" action="{{ url_for('addrecipe', categoryid=categoryid) }}" method="post" name="addrecipe">
                 <legend>Add New Recipe</legend>
                 <fieldset class="form-group">
-                        <label for="recipename"><i class="fa fa-bolt" aria-hidden="true"></i> Recipe name</label>
-                        <input type="text" name="recipename" id="recipename" class="form-control" placeholder="Recipe name" required>
-                </fieldset>
-                <fieldset class="form-group">
-                    <label for="recipeingredients"><i class="fa fa-bolt" aria-hidden="true"></i> Recipe ingredients</label>
-                    <textarea name="recipeingredients" id="recipeingredients" class="form-control" placeholder="Recipe ingredients" required></textarea>
+                        <label for="recipetitle"><i class="fa fa-bolt" aria-hidden="true"></i> Recipe title</label>
+                        {{ form.recipetitle(class="form-control", placeholder="Recipe title")}}
+                        {% if form.recipetitle.errors %}
+                            <ul class=errors style="color: red; font: Verdana;">
+                            {% for error in form.recipetitle.errors %}
+                              <li>{{ error }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
                 </fieldset>
                 <fieldset class="form-group">
                         <label for="recipedescription"><i class="fa fa-bolt" aria-hidden="true"></i> Recipe description</label>
-                        <textarea name="recipedescription" id="recipedescription" class="form-control" placeholder="Recipe description" required></textarea>
-                </fieldset>
-                <fieldset class="form-group">
-                    <label for="recipecategory"><i class="fa fa-bolt" aria-hidden="true"></i> Recipe category</label>
-                    <select name="recipecategory" id="recipecategory" class="form-control custom-select" required>
-                        <option selected>Choose Category...</option>
-                        <option value="1">Indian cuisine</option>
-                        <option value="2">Chinese cuisine</option>
-                        <option value="3">African cuisine</option>
-                        <option value="4">Western cuisine</option>
-                        <option value="5">Italian cuisine</option>
-                    </select>
-                </fieldset>
-                <fieldset class="form-group">
-                        <label for="recipepicture"><i class="fa fa-bolt" aria-hidden="true"></i> Recipe picture</label>
-                        <input type="file" name="recipepicture" id="recipepicture" class="form-control" placeholder="Recipe picture" required>
+                        {{ form.recipedescription(class="form-control", placeholder="Recipe description")}}
+                        {% if form.recipedescription.errors %}
+                            <ul class=errors style="color: red; font: Verdana;">
+                            {% for error in form.recipedescription.errors %}
+                              <li>{{ error }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
                 </fieldset>
                 <button type="submit" class="btn btn-success btn-block"><i class="fa fa-2x fa-plus" aria-hidden="true"></i> Add New Recipe</button>
             </form>

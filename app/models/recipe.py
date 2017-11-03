@@ -1,6 +1,7 @@
 """ Class for recipes """
 from uuid import uuid4
 
+
 class Recipe(object):
     """ Recipe class """
 
