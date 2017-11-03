@@ -99,6 +99,7 @@ def addcategory():
                 user.create_category(form.categorytitle.data,
                                      form.categorydescription.data
                                      )
+                flash(u'You just created a new category! Woo Hoo!', 'adc_success')
                 return redirect('/viewcategory')
             else:
                 flash("You should login first")
@@ -122,6 +123,7 @@ def addrecipe(categoryid):
                     if categoryid == category.id:
                         category.add_recipe(
                             form.recipetitle.data, form.recipedescription.data)
+                        flash(u'You just made a new recipe.')
                         return redirect(url_for('viewrecipe'))
     return render_template('addrecipe.html',
                            title='addrecipe',
@@ -159,6 +161,7 @@ def editcategory(id):
                 user.update_category(id,
                                      form.categorytitle.data,
                                      form.categorydescription.data)
+                flash(u'Your category is updated.')
                 return redirect('/viewcategory')
     return render_template('editcategory.html',
                            title='editcategory',
@@ -180,7 +183,8 @@ def editrecipe(categoryid, recipeid):
                 user.categories[categoryid].edit_recipe(recipeid,
                                                         form.recipetitle.data,
                                                         form.recipedescription.data)
-                return redirect('/viewcategory')
+                flash(u'Your recipe is updated.')
+                return redirect('/viewrecipe')
     return render_template('editrecipe.html',
                            title='editrecipe',
                            form=form,
@@ -222,6 +226,7 @@ def deletecategory(id):
     for user in users:
         if user.email == session['logged_in']:
             user.delete_category(id)
+            flash(u'You just deleted a category')
             return redirect('/viewcategory')
 
 
@@ -232,6 +237,7 @@ def deleterecipe(categoryid, recipeid):
     for user in users:
         if user.email == session['logged_in']:
             user.categories[categoryid].delete_recipe(recipeid)
+            flash(u'You just deleted a recipe.')
             return redirect('/viewrecipe')
 
 
@@ -276,6 +282,7 @@ def signin():
             if user.email == form.email.data and\
                     user.password == form.password.data:
                 session['logged_in'] = user.email
+                flash(u'Welcome back.')
                 return redirect('/profile')
             else:
                 flash("Your email or password is wrong")
@@ -307,4 +314,5 @@ def signup():
 def logout():
     """ remove the session if it's there """
     session.clear()
+    flash(u'Bye. Welcome back again!')
     return redirect(url_for('index'))
