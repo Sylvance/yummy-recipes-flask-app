@@ -1,6 +1,7 @@
 """ Views file for the Flask APP"""
 from flask import render_template, session, redirect, url_for, flash, request
-from wtforms import Form, StringField, SelectField, PasswordField, TextField, TextAreaField, validators
+from wtforms import Form, StringField, SelectField, PasswordField, \
+    TextField, TextAreaField, validators
 from functools import wraps
 from app import APP
 from .models.users import User
@@ -99,7 +100,7 @@ def addcategory():
                 user.create_category(form.categorytitle.data,
                                      form.categorydescription.data
                                      )
-                flash(u'You just created a new category! Woo Hoo!', 'adc_success')
+                flash(u'You just created a new category! Woo Hoo!')
                 return redirect('/viewcategory')
             else:
                 flash("You should login first")
@@ -180,9 +181,11 @@ def editrecipe(categoryid, recipeid):
     if request.method == 'POST' and form.validate():
         for user in users:
             if user.email == session['logged_in']:
+                recipetitle = form.recipetitle.data
+                recipedescription = form.recipedescription.data
                 user.categories[categoryid].edit_recipe(recipeid,
-                                                        form.recipetitle.data,
-                                                        form.recipedescription.data)
+                                                        recipetitle,
+                                                        recipedescription)
                 flash(u'Your recipe is updated.')
                 return redirect('/viewrecipe')
     return render_template('editrecipe.html',

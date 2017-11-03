@@ -49,7 +49,7 @@
             <h5 class="yummy-head">My Recipes</h5>
             {% with messages = get_flashed_messages(with_categories=true) %}
               {% if messages %}
-                <ul class=flashes style="padding: 1.5em; background-color: crimson; border-radius: 5px; box-shadow: 1px 2px #eeeccc; ">
+                <ul class="yummy-flash" style="padding: 1.5em; background-color: skyblue; border-radius: 5px; box-shadow: 1px 2px #eeeccc; ">
                 {% for category, message in messages %}
                   <li class="{{ category }}">{{ message }}</li>
                 {% endfor %}

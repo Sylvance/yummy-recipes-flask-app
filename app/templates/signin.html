@@ -6,6 +6,15 @@
             <form class="yummy-form" action="/signin" method="post" name="signin">
                 <h3>Yummy Recipes</h3>
                 <legend>Sign In</legend>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    <ul class="yummy-flash" style="padding: 1.5em; background-color: lightyellow; border-radius: 5px; box-shadow: 1px 2px #eeeccc; ">
+                    {% for category, message in messages %}
+                      <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                  {% endif %}
+                {% endwith %}
                 <p>Have no account? <a href="{{ url_for('signup') }}">Sign up</a>.</p>
                 <fieldset class="form-group">
                     <label for="email"><i class="fa fa-inbox" aria-hidden="true"></i> Email</label>

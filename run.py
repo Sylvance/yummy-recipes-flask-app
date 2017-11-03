@@ -1,5 +1,4 @@
 """ The app's Entry Point"""
-#! /usr/bin/env python
 from app import APP
 import os
 
