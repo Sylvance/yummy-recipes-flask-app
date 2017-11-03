@@ -1,5 +1,6 @@
 """ The tests for the app"""
 import unittest
+import flask
 
 from app import APP
 from app.models.recipe import Recipe
@@ -46,6 +47,7 @@ class BasicTestCase(unittest.TestCase):
                                         'Dishes made in Kenya')
         self.recipeid = self.sample_category.add_recipe('not chapati',
                                                         'not round or brown or good')
+        APP.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
     def test_index(self):
         """ 
@@ -83,10 +85,9 @@ class BasicTestCase(unittest.TestCase):
             The url endpoint is;
                 =>    /addrecipe/<categoryid> (get, post)
         """
-        tester = APP.test_client(self)
-        response = tester.get('/addrecipe/<categoryid>',
-                              content_type='html/text')
-        self.assertEqual(response.status_code, 200)
+        with APP.test_request_context('/addrecipe/?categoryid=Kenyan'):
+            assert flask.request.path == '/addrecipe/'
+            assert flask.request.args['categoryid'] == 'Kenyan'
 
     def test_category(self):
         """ 
@@ -104,9 +105,9 @@ class BasicTestCase(unittest.TestCase):
             The url endpoint is;
                 =>    /editcategory/<id> (get, post)
         """
-        tester = APP.test_client(self)
-        response = tester.get('/editcategory', content_type='html/text')
-        self.assertEqual(response.status_code, 200)
+        with APP.test_request_context('/editcategory/?categoryid=Kenyan'):
+            assert flask.request.path == '/editcategory/'
+            assert flask.request.args['categoryid'] == 'Kenyan'
 
     def test_editrecipe(self):
         """ 
@@ -114,9 +115,10 @@ class BasicTestCase(unittest.TestCase):
             The url endpoint is;
                 =>    /editrecipe/<categoryid>/<recipeid> (get, post)
         """
-        tester = APP.test_client(self)
-        response = tester.get('/editrecipe', content_type='html/text')
-        self.assertEqual(response.status_code, 200)
+        with APP.test_request_context('/editrecipe/?categoryid=Kenyan/?recipeid=Chapati'):
+            assert flask.request.path == '/editrecipe/'
+            assert flask.request.args['categoryid'] == 'Kenyan'
+            assert flask.request.args['categoryid'] == 'Kenyan'
 
     def test_profile(self):
         """ 
@@ -140,9 +142,9 @@ class BasicTestCase(unittest.TestCase):
 
     def test_signin(self):
         """ 
-            A test for loading of the editrecipe page
+            A test for loading of the sigin page
             The url endpoint is;
-                =>    /signin (get, post)
+                =>    /signin (get)
         """
         tester = APP.test_client(self)
         response = tester.get('/signin', content_type='html/text')
@@ -150,13 +152,23 @@ class BasicTestCase(unittest.TestCase):
 
     def test_signup(self):
         """ 
-            A test for loading of the editrecipe page
+            A test for loading of the signup page
             The url endpoint is;
                 =>    /signup (get, post)
         """
         tester = APP.test_client(self)
         response = tester.get('/signup', content_type='html/text')
         self.assertEqual(response.status_code, 200)
+
+
+    def test_logout(self):
+        """ 
+            A test for loading of the editrecipe page
+            The url endpoint is;
+                =>    /logout (get)
+        """
+        r = APP.test_client(self)
+        return r.get('/logout', follow_redirects=True)
 
     def test_viewcategory(self):
         """ 
@@ -165,7 +177,7 @@ class BasicTestCase(unittest.TestCase):
                 =>    /viewcategory (get)
         """
         tester = APP.test_client(self)
-        response = tester.get('/viewcategory', content_type='html/text')
+        response = tester.get('/viewcategory', content_type='html/text', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
 
     def test_viewrecipe(self):
@@ -175,7 +187,7 @@ class BasicTestCase(unittest.TestCase):
                 =>    /viewrecipe (get)
         """
         tester = APP.test_client(self)
-        response = tester.get('/viewrecipe', content_type='html/text')
+        response = tester.get('/viewrecipe', content_type='html/text', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
 
 
