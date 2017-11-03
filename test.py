@@ -77,7 +77,7 @@ class BasicTestCase(unittest.TestCase):
         """
         tester = APP.test_client(self)
         response = tester.get('/addcategory', content_type='html/text')
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
     def test_addrecipe(self):
         """ 
@@ -95,9 +95,9 @@ class BasicTestCase(unittest.TestCase):
             The url endpoint is;
                 =>    /category/<categoryid> (get)
         """
-        tester = APP.test_client(self)
-        response = tester.get('/category', content_type='html/text')
-        self.assertEqual(response.status_code, 200)
+        with APP.test_request_context('/category/?categoryid=Kenyan'):
+            assert flask.request.path == '/category/'
+            assert flask.request.args['categoryid'] == 'Kenyan'
 
     def test_editcategory(self):
         """ 
@@ -109,40 +109,21 @@ class BasicTestCase(unittest.TestCase):
             assert flask.request.path == '/editcategory/'
             assert flask.request.args['categoryid'] == 'Kenyan'
 
-    def test_editrecipe(self):
-        """ 
-            A test for loading of the editrecipe page
-            The url endpoint is;
-                =>    /editrecipe/<categoryid>/<recipeid> (get, post)
-        """
-        with APP.test_request_context('/editrecipe/?categoryid=Kenyan/?recipeid=Chapati'):
-            assert flask.request.path == '/editrecipe/'
-            assert flask.request.args['categoryid'] == 'Kenyan'
-            assert flask.request.args['categoryid'] == 'Kenyan'
 
     def test_profile(self):
         """ 
-            A test for loading of the editrecipe page
+            A test for loading of the profile page
             The url endpoint is;
                 =>    /profile (get)
         """
         tester = APP.test_client(self)
         response = tester.get('/profile', content_type='html/text')
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
-    def test_recipe(self):
-        """ 
-            A test for loading of the editrecipe page
-            The url endpoint is;
-                =>    /recipe/<categoryid>/<recipeid> (get)
-        """
-        tester = APP.test_client(self)
-        response = tester.get('/recipe', content_type='html/text')
-        self.assertEqual(response.status_code, 200)
 
     def test_signin(self):
         """ 
-            A test for loading of the sigin page
+            A test for loading of the signin page
             The url endpoint is;
                 =>    /signin (get)
         """
