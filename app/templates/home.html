@@ -9,28 +9,11 @@
             <p>Welcome, please sign up or sign in.</p>
             {% with messages = get_flashed_messages(with_categories=true) %}
               {% if messages %}
-                <div class="modal fade" id="flashmodal" tabindex="-1" role="dialog" aria-labelledby="modalLabelSmall" aria-hidden="true">
-                  <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title" id="modalLabelSmall">Hi there,</h4>
-                      </div>
-
-                      <div class="modal-body">
-                        <ul id="yummy-flash" style="padding: 1.5em; border-radius: 5px; box-shadow: 1px 2px #eeeccc; ">
-                        {% for category, message in messages %}
-                          <li class="{{ category }}">{{ message }}</li>
-                        {% endfor %}
-                        </ul>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
+                <ul id="yummy-flash" style="padding: 1.5em; border-radius: 5px; box-shadow: 1px 2px #eeeccc; ">
+                {% for category, message in messages %}
+                  <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
               {% endif %}
             {% endwith %}
             <a href="{{ url_for('signup') }}" class="btn btn-success btn-block"><i class="fa fa-2x fa-unlock" aria-hidden="true"></i> Sign Up</a>
