@@ -14,7 +14,10 @@ https://github.com/Sylvance/yummy-recipes-flask-api
 
 ## Heroku
 You will find the app live on Heroku here;
-https://tamurecipes.herokuapp.com
+https://recipetoire.herokuapp.com/
+
+## Screenshot
+![Alt text](https://sylvance.github.io/yummy-recipes-designs/ui/images/profile.png?raw=true "Profile")
 
 ## Installation
 
@@ -38,6 +41,7 @@ python run.py
 ```
 
 ## Run
+To run the application then you should run this in your terminal;
 
 ```
 # run
@@ -45,6 +49,7 @@ python run.py
 ```
 
 ## Test
+To run the tests then run this on your command prompt;
 
 ```
 # test
