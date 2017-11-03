@@ -21,7 +21,7 @@
             <a class="nav-link" href="{{ url_for('viewrecipe') }}">Recipes</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('index') }}">Logout</a>
+            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
             </li>
           </ul>
         </div>                   
@@ -35,10 +35,10 @@
           <div class="list-group">
             <hr>
             <a href="{{ url_for('profile') }}" class="list-group-item list-group-item-action">Profile</a>
-            <a href="{{ url_for('viewcategory') }}" class="list-group-item list-group-item-action list-group-item-info">Categories : <span>{{ user.categoriesno }}</span></a>
-            <a href="{{ url_for('viewrecipe') }}" class="list-group-item list-group-item-action list-group-item-success">Recipes : <span>{{ user.recipesno }}</span></a>
+            <a href="{{ url_for('viewcategory') }}" class="list-group-item list-group-item-action list-group-item-info">Categories</a>
+            <a href="{{ url_for('viewrecipe') }}" class="list-group-item list-group-item-action list-group-item-success">Recipes</a>
             <hr>
-            <a href="{{ url_for('index') }}" class="list-group-item list-group-item-action list-group-item-warning">Logout</a>
+            <a href="{{ url_for('logout') }}" class="list-group-item list-group-item-action list-group-item-warning">Logout</a>
           </div>
         </div>
       </div>

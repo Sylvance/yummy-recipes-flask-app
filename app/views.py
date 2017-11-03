@@ -42,23 +42,22 @@ class CreateCategory(Form):
 
 class EditCategory(Form):
     """create form input fields for edit"""
-    categorytitle = StringField('newtitle', [validators.DataRequired()])
+    categorytitle = StringField('categorytitle', [validators.DataRequired()])
     categorydescription = StringField(
-        'newdescription', [validators.DataRequired()])
+        'description', [validators.DataRequired()])
 
 
 class CreateRecipe(Form):
     """creates form input field for adding recipe"""
     recipetitle = StringField('recipetitle', [validators.DataRequired()])
-    recipecategory = SelectField('recipecategory', [validators.DataRequired()])
     recipedescription = TextAreaField('recipedescription')
 
 
 class EditRecipe(Form):
     """creates form input field for editing recipe"""
-    recipetitle = StringField('newtitle', [validators.DataRequired()])
+    recipetitle = StringField('recipetitle', [validators.DataRequired()])
     recipedescription = StringField(
-        'newdescription', [validators.DataRequired()])
+        'recipedescription', [validators.DataRequired()])
 
 
 def login_required(f):
@@ -109,9 +108,9 @@ def addcategory():
                            user=currentuser)
 
 
-@APP.route('/addrecipe', methods=['GET', 'POST'])
+@APP.route('/addrecipe/<categoryid>', methods=['GET', 'POST'])
 @login_required
-def addrecipe():
+def addrecipe(categoryid):
     """ A form that adds a new recipe """
     form = CreateRecipe(request.form)
     currentuser = provide_user()
@@ -120,21 +119,15 @@ def addrecipe():
         for user in users:
             if user.email == session['logged_in']:
                 for category in user.categories.values():
-                    if id == category.id:
+                    if categoryid == category.id:
                         category.add_recipe(
                             form.recipetitle.data, form.recipedescription.data)
-                        return redirect('/viewrecipe')
-            else:
-                flash("You should login first")
-                redirect('/signin')
-    else:
-        for user in users:
-            if user.email == session['logged_in']:
-                categories = user.categories
-                return render_template('addrecipe.html',
-                                       title='addrecipe',
-                                       form=form,
-                                       user=currentuser)
+                        return redirect(url_for('viewrecipe'))
+    return render_template('addrecipe.html',
+                           title='addrecipe',
+                           form=form,
+                           categoryid=categoryid,
+                           user=currentuser)
 
 
 @APP.route('/category/<categoryid>', methods=['GET'])
@@ -145,9 +138,11 @@ def category(categoryid):
     for user in users:
         if user.email == session['logged_in']:
             category = user.categories[categoryid]
+            recipes = user.categories[categoryid].recipes
             return render_template('category.html',
                                    title='category',
                                    category=category,
+                                   recipes=recipes,
                                    user=currentuser)
 
 
@@ -167,7 +162,7 @@ def editcategory(id):
                 return redirect('/viewcategory')
     return render_template('editcategory.html',
                            title='editcategory',
-                           categoryid = id,
+                           categoryid=id,
                            form=form,
                            user=currentuser)
 
@@ -182,13 +177,13 @@ def editrecipe(categoryid, recipeid):
     if request.method == 'POST' and form.validate():
         for user in users:
             if user.email == session['logged_in']:
-                currentuser = user
                 user.categories[categoryid].edit_recipe(recipeid,
                                                         form.recipetitle.data,
                                                         form.recipedescription.data)
                 return redirect('/viewcategory')
     return render_template('editrecipe.html',
                            title='editrecipe',
+                           form=form,
                            user=currentuser)
 
 
@@ -262,11 +257,13 @@ def recipe(categoryid, recipeid):
     currentuser = provide_user()
     for user in users:
         if user.email == session['logged_in']:
-            recipe = user.categories[categoryid][recipeid]
-    return render_template('recipe.html',
-                           title='recipe',
-                           recipe=recipe,
-                           user=currentuser)
+            recipe = user.categories[categoryid].recipes[recipeid]
+            return render_template('recipe.html',
+                                   title='recipe',
+                                   recipe=recipe,
+                                   categoryid=categoryid,
+                                   user=currentuser)
+    return redirect('/index')
 
 
 @APP.route('/signin', methods=['GET', 'POST'])

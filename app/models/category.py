@@ -2,6 +2,7 @@
 from uuid import uuid4
 from .recipe import Recipe
 
+
 class Category(object):
     """Category class"""
 
@@ -25,7 +26,6 @@ class Category(object):
             if id == key:
                 self.recipes[key].recipetitle = recipetitle
                 self.recipes[key].recipetitle = recipetitle
-
 
     def delete_recipe(self, id):
         """ Delete a recipe"""
