@@ -49,22 +49,30 @@
             <h5 class="yummy-head">My Recipes</h5>
             {% with messages = get_flashed_messages(with_categories=true) %}
               {% if messages %}
-                <ul class="yummy-flash" style="padding: 1.5em; background-color: skyblue; border-radius: 5px; box-shadow: 1px 2px #eeeccc; ">
-                {% for category, message in messages %}
-                  <li class="{{ category }}">{{ message }}</li>
-                {% endfor %}
-                </ul>
+                <div class="modal fade" id="flashmodal" tabindex="-1" role="dialog" aria-labelledby="modalLabelSmall" aria-hidden="true">
+                  <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="modalLabelSmall">{{ user.username}},</h4>
+                      </div>
+
+                      <div class="modal-body">
+                        <ul id="yummy-flash" style="padding: 1.5em; border-radius: 5px; box-shadow: 1px 2px #eeeccc; ">
+                        {% for category, message in messages %}
+                          <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
               {% endif %}
             {% endwith %}
-            {% if categories %}
-              {% for category in categories.values() %}
-              {% set id = category.id %}
-                {% for recipe in categories[id].recipes.values() %}
-                {% set rid = recipe.id %}
-                  <p class="yummy-recipe"><a href="{{ url_for('recipe', categoryid=id, recipeid=rid) }}">{{ recipe.recipetitle}} </a><span><a href="#" style="color: #9e1f37;" data-toggle="modal" data-target="#dr{{ rid }}">X</a></span></p>
-                {% endfor %}
-              {% endfor %}
-            {% endif %}
             <hr>
             <hr>
             <a href="{{ url_for('profile') }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>

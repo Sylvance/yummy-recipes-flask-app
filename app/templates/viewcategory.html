@@ -49,19 +49,30 @@
             <h5 class="yummy-head">My Categories</h5>
             {% with messages = get_flashed_messages(with_categories=true) %}
               {% if messages %}
-                <ul class="yummy-flash" style="padding: 1.5em; background-color: skyblue; border-radius: 5px; box-shadow: 1px 2px #eeeccc; ">
-                {% for category, message in messages %}
-                  <li class="{{ category }}">{{ message }}</li>
-                {% endfor %}
-                </ul>
+                <div class="modal fade" id="flashmodal" tabindex="-1" role="dialog" aria-labelledby="modalLabelSmall" aria-hidden="true">
+                  <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="modalLabelSmall">{{ user.username}},</h4>
+                      </div>
+
+                      <div class="modal-body">
+                        <ul id="yummy-flash" style="padding: 1.5em; border-radius: 5px; box-shadow: 1px 2px #eeeccc; ">
+                        {% for category, message in messages %}
+                          <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
               {% endif %}
             {% endwith %}
-            {% if categories %}
-              {% for category in categories.values() %}
-              {% set id = category.id %}
-                <p class="yummy-category"><a href="{{ url_for('category', categoryid=id) }}">{{ category.categorytitle}}</a><span><a href="#" style="color: #9e1f37;" data-toggle="modal" data-target="#dc{{ id }}">X</a></span></p>
-              {% endfor %}
-            {% endif %}
             <hr>
             <a href="{{ url_for('addcategory') }}" style="color: green;"><i class="fa fa-plus" aria-hidden="true"></i> Add new category</a>
             <hr>
