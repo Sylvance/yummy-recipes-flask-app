@@ -28,6 +28,7 @@ class BasicTestCase(unittest.TestCase):
           15. /signup (get, post)
           16. /logout
     """
+
     def setUp(self):
         """
         Sets up tests Category object : 
@@ -37,13 +38,14 @@ class BasicTestCase(unittest.TestCase):
             self.categorytitle = categorytitle
             self.categorydescription = categorydescription
         """
-        self.new_user = User('sylvance', 'sylvance@mail', 'I am good','Scifi4u*@')
+        self.new_user = User('sylvance', 'sylvance@mail',
+                             'I am good', 'Scifi4u*@')
         self.categoryid = self.new_user.create_category('Chinese dishes',
-                                           'Dishes made in China')
+                                                        'Dishes made in China')
         self.sample_category = Category('Kenyan dishes',
-                                     'Dishes made in Kenya')
-        self.recipeid = self.sample_category.add_recipe('not chapati', 
-                                             'not round or brown or good')
+                                        'Dishes made in Kenya')
+        self.recipeid = self.sample_category.add_recipe('not chapati',
+                                                        'not round or brown or good')
 
     def test_index(self):
         """ 
@@ -65,7 +67,6 @@ class BasicTestCase(unittest.TestCase):
         response = tester.get('/index', content_type='html/text')
         self.assertEqual(response.status_code, 200)
 
-
     def test_addcategory(self):
         """ 
             A test for loading of the addcategory page
@@ -76,81 +77,106 @@ class BasicTestCase(unittest.TestCase):
         response = tester.get('/addcategory', content_type='html/text')
         self.assertEqual(response.status_code, 200)
 
-    # def test_addrecipe(self):
-    #     """ 
-    #         A test for loading of the addrecipe page
-    #         The url endpoint is;
-    #             =>    /addrecipe/<categoryid> (get, post)
-    #     """
-    #     tester = APP.test_client(self)
-    #     response = tester.get('/addrecipe/<categoryid>', content_type='html/text')
-    #     self.assertEqual(response.status_code, 200)
+    def test_addrecipe(self):
+        """ 
+            A test for loading of the addrecipe page
+            The url endpoint is;
+                =>    /addrecipe/<categoryid> (get, post)
+        """
+        tester = APP.test_client(self)
+        response = tester.get('/addrecipe/<categoryid>',
+                              content_type='html/text')
+        self.assertEqual(response.status_code, 200)
 
-    # def test_category(self):
-    #     """ 
-    #         A test for loading of the category page
-    #         The url endpoint is;
-    #             =>    /addrecipe/<categoryid> (get, post)
-    #     """
-    #     tester = APP.test_client(self)
-    #     response = tester.get('/category', content_type='html/text')
-    #     self.assertEqual(response.status_code, 200)
+    def test_category(self):
+        """ 
+            A test for loading of the category page
+            The url endpoint is;
+                =>    /category/<categoryid> (get)
+        """
+        tester = APP.test_client(self)
+        response = tester.get('/category', content_type='html/text')
+        self.assertEqual(response.status_code, 200)
 
-    # def test_editcategory(self):
-    #     """ 
-    #         A test for loading of the editcategory page
-    #         The url endpoint is;
-    #             =>    /editcategory/<categoryid> (get, post)
-    #     """
-    #     tester = APP.test_client(self)
-    #     response = tester.get('/editcategory', content_type='html/text')
-    #     self.assertEqual(response.status_code, 200)
+    def test_editcategory(self):
+        """ 
+            A test for loading of the editcategory page
+            The url endpoint is;
+                =>    /editcategory/<id> (get, post)
+        """
+        tester = APP.test_client(self)
+        response = tester.get('/editcategory', content_type='html/text')
+        self.assertEqual(response.status_code, 200)
 
-    # def test_editrecipe(self):
-    #     """ 
-    #         A test for loading of the editrecipe page
-    #         The url endpoint is;
-    #             =>    /editrecipe/<categoryid> (get, post)
-    #     """
-    #     tester = APP.test_client(self)
-    #     response = tester.get('/editrecipe', content_type='html/text')
-    #     self.assertEqual(response.status_code, 200)
+    def test_editrecipe(self):
+        """ 
+            A test for loading of the editrecipe page
+            The url endpoint is;
+                =>    /editrecipe/<categoryid>/<recipeid> (get, post)
+        """
+        tester = APP.test_client(self)
+        response = tester.get('/editrecipe', content_type='html/text')
+        self.assertEqual(response.status_code, 200)
 
-    # def test_profile(self):
-    #     """ A test"""
-    #     tester = APP.test_client(self)
-    #     response = tester.get('/profile', content_type='html/text')
-    #     self.assertEqual(response.status_code, 200)
+    def test_profile(self):
+        """ 
+            A test for loading of the editrecipe page
+            The url endpoint is;
+                =>    /profile (get)
+        """
+        tester = APP.test_client(self)
+        response = tester.get('/profile', content_type='html/text')
+        self.assertEqual(response.status_code, 200)
 
-    # def test_recipe(self):
-    #     """ A test"""
-    #     tester = APP.test_client(self)
-    #     response = tester.get('/recipe', content_type='html/text')
-    #     self.assertEqual(response.status_code, 200)
+    def test_recipe(self):
+        """ 
+            A test for loading of the editrecipe page
+            The url endpoint is;
+                =>    /recipe/<categoryid>/<recipeid> (get)
+        """
+        tester = APP.test_client(self)
+        response = tester.get('/recipe', content_type='html/text')
+        self.assertEqual(response.status_code, 200)
 
     def test_signin(self):
-        """ A test"""
+        """ 
+            A test for loading of the editrecipe page
+            The url endpoint is;
+                =>    /signin (get, post)
+        """
         tester = APP.test_client(self)
         response = tester.get('/signin', content_type='html/text')
         self.assertEqual(response.status_code, 200)
 
     def test_signup(self):
-        """ A test"""
+        """ 
+            A test for loading of the editrecipe page
+            The url endpoint is;
+                =>    /signup (get, post)
+        """
         tester = APP.test_client(self)
         response = tester.get('/signup', content_type='html/text')
         self.assertEqual(response.status_code, 200)
 
-    # def test_viewcategory(self):
-    #     """ A test"""
-    #     tester = APP.test_client(self)
-    #     response = tester.get('/viewcategory', content_type='html/text')
-    #     self.assertEqual(response.status_code, 200)
+    def test_viewcategory(self):
+        """ 
+            A test for loading of the editrecipe page
+            The url endpoint is;
+                =>    /viewcategory (get)
+        """
+        tester = APP.test_client(self)
+        response = tester.get('/viewcategory', content_type='html/text')
+        self.assertEqual(response.status_code, 200)
 
-    # def test_viewrecipe(self):
-    #     """ A test"""
-    #     tester = APP.test_client(self)
-    #     response = tester.get('/viewrecipe', content_type='html/text')
-    #     self.assertEqual(response.status_code, 200)
+    def test_viewrecipe(self):
+        """ 
+            A test for loading of the editrecipe page
+            The url endpoint is;
+                =>    /viewrecipe (get)
+        """
+        tester = APP.test_client(self)
+        response = tester.get('/viewrecipe', content_type='html/text')
+        self.assertEqual(response.status_code, 200)
 
 
 class TestCategory(unittest.TestCase):
@@ -161,6 +187,7 @@ class TestCategory(unittest.TestCase):
           2. Edit recipe
           3. Delete recipe 
     """
+
     def setUp(self):
         """
         Sets up tests Category object : 
@@ -171,36 +198,38 @@ class TestCategory(unittest.TestCase):
             self.categorydescription = categorydescription
         """
         self.sample_category = Category('Kenyan dishes',
-                                     'Dishes made in Kenya')
+                                        'Dishes made in Kenya')
+
     def test_add_recipe(self):
         """ Test whether a recipe has been saved """
         before_add = len(self.sample_category.recipes)
-        self.sample_category.add_recipe('chapati', 
+        self.sample_category.add_recipe('chapati',
                                         'round brown and good')
         after_add = len(self.sample_category.recipes)
         self.assertEqual(after_add - before_add, 1)
 
     def test_edit_recipe(self):
         """ Test whether  an recipe has been edited """
-        id = self.sample_category.add_recipe('not chapati', 
+        id = self.sample_category.add_recipe('not chapati',
                                              'not round or brown or good')
-        self.sample_category.edit_recipe(id, 
-                                       'chapati', 
-                                       'round brown and good')
+        self.sample_category.edit_recipe(id,
+                                         'chapati',
+                                         'round brown and good')
+        recipe = self.sample_category.recipes[id]
         self.assertEqual(
-            self.sample_category.recipes[id]['recipetitle'],
+            recipe.recipetitle,
             'chapati')
 
     def test_delete_recipe(self):
         """Test whether a recipe has been deleted"""
-        id = self.sample_category.add_recipe('not chapati', 
+        id = self.sample_category.add_recipe('not chapati',
                                              'not round or brown or good')
         size_before = len(self.sample_category.recipes)
         self.sample_category.delete_recipe(id)
         size_after = len(self.sample_category.recipes)
         self.assertTrue(size_before - size_after, 1)
-        
-            
+
+
 class TestUser(unittest.TestCase):
     """
     These are tests for User methods.
@@ -209,6 +238,7 @@ class TestUser(unittest.TestCase):
           2. Edit category
           3. Delete category 
     """
+
     def setUp(self):
         """
         Sets up tests User object : 
@@ -220,7 +250,8 @@ class TestUser(unittest.TestCase):
             self.bio = bio
             self.password = password
         """
-        self.new_user = User('sylvance', 'sylvance@mail', 'I am good','Scifi4u*@')
+        self.new_user = User('sylvance', 'sylvance@mail',
+                             'I am good', 'Scifi4u*@')
 
     def test_create_category(self):
         """ Test whether category has been  created """
@@ -234,15 +265,16 @@ class TestUser(unittest.TestCase):
         """ Test whether category has been edited"""
         id = self.new_user.create_category('Chinese dishes',
                                            'Dishes made in China')
-        self.new_user.update_category(id, 
+        self.new_user.update_category(id,
                                       'Chinese dishes reloaded',
                                       'Made in China')
-        self.assertEqual(self.new_user.categories[id]['categorytitle'],
+        category = self.new_user.categories[id]
+        self.assertEqual(category.categorytitle,
                          'Chinese dishes reloaded'
                          )
-        self.assertEqual(self.new_user.categories[id]['description'],
+        self.assertEqual(category.categorydescription,
                          'Made in China')
-        
+
     def test_delete_category(self):
         """ Test whether  category has been deleted """
         id = self.new_user.create_category('Indian dishes',
