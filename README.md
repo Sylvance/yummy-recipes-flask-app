@@ -17,7 +17,7 @@ You will find the app live on Heroku here;
 https://recipetoire.herokuapp.com/
 
 ## Screenshot
-![Alt text](https://sylvance.github.io/yummy-recipes-designs/ui/images/profile.png?raw=true "Profile")
+![Alt text](https://sylvance.github.io/yummy-recipes-flask-app/app/static/images/recipetoire.png?raw=true "Profile")
 
 ## Installation
 
