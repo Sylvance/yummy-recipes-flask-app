@@ -36,29 +36,27 @@ class LoginForm(Form):
 
 
 class CreateCategory(Form):
-    """create form input for category"""
+    """create form input for creating category"""
     categorytitle = StringField('categorytitle', [validators.DataRequired()])
-    categorydescription = StringField('categorydescription')
+    categorydescription = StringField('categorydescription', [validators.DataRequired()])
 
 
 class EditCategory(Form):
-    """create form input fields for edit"""
+    """create form input fields for editing category"""
     categorytitle = StringField('categorytitle', [validators.DataRequired()])
-    categorydescription = StringField(
-        'description', [validators.DataRequired()])
+    categorydescription = StringField('categorydescription', [validators.DataRequired()])
 
 
 class CreateRecipe(Form):
     """creates form input field for adding recipe"""
     recipetitle = StringField('recipetitle', [validators.DataRequired()])
-    recipedescription = TextAreaField('recipedescription')
+    recipedescription = TextAreaField('recipedescription', [validators.DataRequired()])
 
 
 class EditRecipe(Form):
     """creates form input field for editing recipe"""
     recipetitle = StringField('recipetitle', [validators.DataRequired()])
-    recipedescription = StringField(
-        'recipedescription', [validators.DataRequired()])
+    recipedescription = TextAreaField('recipedescription', [validators.DataRequired()])
 
 
 def login_required(f):
@@ -190,6 +188,8 @@ def editrecipe(categoryid, recipeid):
                 return redirect('/viewrecipe')
     return render_template('editrecipe.html',
                            title='editrecipe',
+                           categoryid=categoryid,
+                           recipeid=recipeid,
                            form=form,
                            user=currentuser)
 

@@ -33,7 +33,7 @@ cd yummy-recipes-flask-app
 pip install -r requirements.txt
 
 # test
-python manage.py test
+python test.py
 
 # run
 python run.py
@@ -53,5 +53,5 @@ To run the tests then run this on your command prompt;
 
 ```
 # test
-python manage.py test
+python test.py
 ```
