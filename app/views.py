@@ -216,10 +216,10 @@ def viewrecipe():
     for user in users:
         if user.email == session['logged_in']:
             categories = user.categories
-    return render_template('viewrecipe.html',
-                           title='viewrecipe',
-                           categories=categories,
-                           user=currentuser)
+            return render_template('viewrecipe.html',
+                                   title='viewrecipe',
+                                   categories=categories,
+                                   user=currentuser)
 
 
 @APP.route('/deletecategory/<id>', methods=['GET'])
