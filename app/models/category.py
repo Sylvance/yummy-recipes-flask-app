@@ -25,7 +25,7 @@ class Category(object):
         for key in self.recipes.copy().keys():
             if id == key:
                 self.recipes[key].recipetitle = recipetitle
-                self.recipes[key].recipetitle = recipetitle
+                self.recipes[key].recipedescription = recipedescription
 
     def delete_recipe(self, id):
         """ Delete a recipe"""

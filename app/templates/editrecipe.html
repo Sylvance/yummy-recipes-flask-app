@@ -46,7 +46,7 @@
           <div class="yummy-card">
             <h3 class="yummy-heading">Edit Recipe</h3>
             <hr>
-            <form class="yummy-form" action="" method="post" name="editrecipe">
+            <form class="yummy-form" action="{{ url_for('editrecipe', categoryid=categoryid, recipeid=recipeid) }}" method="post" name="editrecipe">
                 <legend>Edit Recipe</legend>
                 <fieldset class="form-group">
                         <label for="recipetitle"><i class="fa fa-bolt" aria-hidden="true"></i> Recipe title</label>
