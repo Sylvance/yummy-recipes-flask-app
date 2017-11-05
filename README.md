@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/Sylvance/yummy-recipes-flask-app.svg?branch=master)](https://travis-ci.org/Sylvance/yummy-recipes-flask-app)
 [![Coverage Status](https://coveralls.io/repos/github/Sylvance/yummy-recipes-flask-app/badge.svg?branch=develop)](https://coveralls.io/github/Sylvance/yummy-recipes-flask-app?branch=develop)
+[![HitCount](http://hits.dwyl.io/Sylvance/yummy-recipes-flask-app.svg)](http://hits.dwyl.io/Sylvance/yummy-recipes-flask-app)
 
 # Yummy Recipes
 Yummy recipes provides a platform for users to keep track of their awesome recipes and share with others if they so wish.
